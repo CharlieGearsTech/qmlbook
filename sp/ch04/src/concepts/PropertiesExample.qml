@@ -25,66 +25,54 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-// properties.qml
+//properties.qml
+import QtQuick 2.10
+import QtQuick.Window 2.3
 
-import QtQuick 2.5
+Window{
+    visible: true
+    Rectangle{
+        width: 240; height: 120
 
-Rectangle {
-    width: 240
-    height: 120
+        //M1>>
+        Text{
+            //(1) Identificador
+            id:thisLabel
+            //(2) Indicar posicion en x y y
+            x: 24; y: 16
+            //(3) Enlazar altura con 2 veces ancho
+            height: 2*width
+            //(4) Propiedad personalizada
+            property int times:24
+            //(5) Alias de Propiedad
+            property alias anotherTimes: thisLabel.times
+            //(6) Texto enlazado a otro valor
+            text: "Greetings "+ times
+            //(7) Font es una propiedad agrupada
+            font.family: "Ubuntu"
+            font.pixelSize: 24
+            //(8) KeyNavigation es una propiedad "incluida"
+            KeyNavigation.tab: otherLabel
+            //(9) Manipulador de senal para cambios en propiedades
+            onHeightChanged: console.log('height:',height)
+            // Focus es necesario para recibir eventos del teclado
+            focus: true
+            //Cambiar color basado en el valor de focus
+            color: focus?"red":"black"
+        }
+        // <<M1
 
-    // M1>>
-    Text {
-        // (1) identifier
-        id: thisLabel
-
-        // (2) set x- and y-position
-        x: 24; y: 16
-
-        // (3) bind height to 2 * width
-        height: 2 * width
-
-        // (4) custom property
-        property int times: 24
-
-        // (5) property alias
-        property alias anotherTimes: thisLabel.times
-
-        // (6) set text appended by value
-        text: "Greetings " + times
-
-        // (7) font is a grouped property
-        font.family: "Ubuntu"
-        font.pixelSize: 24
-
-        // (8) KeyNavigation is an attached property
-        KeyNavigation.tab: otherLabel
-
-        // (9) signal handler for property changes
-        onHeightChanged: console.log('height:', height)
-
-        // focus is need to receive key events
-        focus: true
-
-        // change color based on focus value
-        color: focus?"red":"black"
-    }
-    // <<M1
-
-
-    Text {
-        // (1) identifier
-        id: otherLabel
-        x: 24
-        y: 64
-        text: "Other Label"
-
-        // (6) font is a grouped property
-        font.family: "Ubuntu"
-        font.pixelSize: 24
-
-        // (7) Keys is a attached property
-        KeyNavigation.tab: thisLabel
-        color: focus?"red":"black"
+        Text{
+            //(1) Identificador
+            id:otherLabel
+            x:24;y:64
+            text: "Other Label"
+            //(6) Texto enlazado a otro valor
+            font.family: "Ubuntu"
+            font.pixelSize: 24
+            // (7) Keys is a attached property
+            KeyNavigation.tab: thisLabel
+            color: focus?"red":"black"
+        }
     }
 }
