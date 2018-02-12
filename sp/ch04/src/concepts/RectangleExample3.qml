@@ -25,24 +25,26 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-// RectangleExample3.qml
+//properties.qml
+import QtQuick 2.10
+import QtQuick.Window 2.3
 
-import QtQuick 2.5
+Window{
+    visible: true
+    Item{
+        width:200;height: 120
 
-Item {
-    width: 200
-    height: 120
-
-    // M1>>
-    Rectangle {
-        id: rect1
-        x: 12; y: 12
-        width: 176; height: 96
-        gradient: Gradient {
-            GradientStop { position: 0.0; color: "lightsteelblue" }
-            GradientStop { position: 1.0; color: "slategray" }
+        // M1>>
+        Rectangle{
+            id: rect1
+            x: 12;y: 12
+            width: 176;height: 96
+            gradient: Gradient{
+                GradientStop{ position: 0.0; color: "lightsteelblue"}
+                GradientStop{ position: 1.0; color: "slategray"}
+            }
+            border.color: "slategray"
         }
-        border.color: "slategray"
+        // <<M1
     }
-    // <<M1
 }

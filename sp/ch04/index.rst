@@ -118,55 +118,55 @@ QML y JavaScript (tambien conocido como ECMAScript) son los mejores amigos. En e
 
 		Cuando tienes conflicto en estrategias para cambiar una propiedad como en este caso (texto actualizado por un cambio de un incremento de una propiedad por un enlace y limpieza de texto por un asignación de JavaScript) no podrás usar enlaces! Necesitas usar asignación en las dos patrones de cambios de propiedades, ya que el enlace sera destruido por la asignación (contrato roto!).
 
-Basic Elements
+Elementos Basicos
 ==============
 
 .. issues:: ch04
 
 .. index:: Item, Rectangle, Text, MouseArea, Image, gradients
 
-Elements can be grouped into visual and non-visual elements. A visual element (like the ``Rectangle``) has a geometry and normally presents an area on the screen. A non-visual element (like a ``Timer``) provides general functionality, normally used to manipulate the visual elements.
+Elementos pueden ser agrupados dentro de elementos visuales y no visuales. Un elemento visual (como ``Rectangle``) tiene una geometria y normalmente se presenta en un area del monitor. Un elemento no visual (como un``Timer``) provee una funcionalidad general, normalmente usado para manipular elementos visuales. 
 
-Currently, we will focus on the fundamental visual elements, such as ``Item``, ``Rectangle``, ``Text``, ``Image`` and ``MouseArea``.
+Actualmente, nos enfocaremos en elementos visuales fundamentales, tales como `Item``, ``Rectangle``, ``Text``, ``Image`` y ``MouseArea``.
 
-Item Element
+Elemento Item
 ------------
 
 .. issues:: ch04
 
-``Item`` is the base element for all visual elements as such all other visual elements inherit from ``Item``. It doesn't paint anything by itself but defines all properties which are common across all visual elements:
+``Item`` es un elemento base para todo elemento visual, tal como los otros elementos visuales heredan de ``Item``. No pinta nada más que el mismo pero define todas las propiedades que son comunes entre todos los elementos visuales.
 
 .. list-table::
     :widths: 20,80
     :header-rows: 1
 
-    *   - Group
-        - Properties
-    *   - Geometry
-        - ``x`` and ``y`` to define the top-left position, ``width`` and ``height`` for the expand of the element and also the ``z`` stacking order to lift elements up or down from their natural ordering
-    *   - Layout handling
-        - ``anchors`` (left, right, top, bottom, vertical and horizontal center) to position elements relative to other elements with their ``margins``
-    *   - Key handling
-        - attached ``Key`` and ``KeyNavigation`` properties to control key handling and the input ``focus`` property to enable key handling in the first place
-    *   - Transformation
-        - ``scale`` and ``rotate`` transformation and the generic ``transform`` property list for *x,y,z* transformation and their ``transformOrigin`` point
+    *   - Grupo
+        - Propiedades
+    *   - Geometría
+        - ``x`` y ``y`` para definir el extremo superior-izquierdo, ``width`` y ``height`` para expander el elemento y  ``z`` para sobreponer elementos entre si arriba y abajo para modificar su orden natural.
+    *   - Manejador de planos
+        - ``anchors`` (izquierda, derecha, arriba, abajo, centro vertical y horizontal) para posicionar elementos entre ellos con sus ``margins``.
+    *   - Manejador de teclado
+        - embebido en las propiedades ``Key`` y ``KeyNavigation`` para controlar manejo de teclado y la entrada, la propiedad ``focus`` para permitir este manejo de teclado.
+    *   - Transformación
+        - ``scale`` y ``rotate`` transformaciones y la lista de propiedades generica ``transform`` para transformaciones en *x,y,z* y sus puntos de ``transformOrigin``.
     *   - Visual
-        - ``opacity`` to control transparency, ``visible`` to show/hide elements, ``clip`` to restrain paint operations to the element boundary and ``smooth`` to enhance the rendering quality
-    *   - State definition
-        - ``states`` list property with the supported list of states and the current ``state`` property as also the ``transitions`` list property to animate state changes.
+        - ``opacity`` para controlar transparencia, ``visible`` para mostrar/ocultar elementos, ``clip`` para restringir operaciones de pintado para el perímetro del elemento y ``smooth`` para mejorar la calidad de render.
+    *   - Definición de estado
+        - La lista de propiedades ``states`` con soporte de listas de estados y la propiedad del actual ``state`` como también la lista de propiedades ``transitions`` para animar cambios entre estados.
 
-To better understand the different properties we will try to introduce them throughout this chapter in context of the element presented. Please remember these fundamental properties are available on every visual element and work the same across these elements.
+Para mejorar el aprendizaje de las diferentes propiedades, trataremos de introducirlos dentro de este capitulo en el contexto de los elementos presentados. Recuerda que estas propiedades fundamentales están disponibles en cada elemento visual y trabajan igual entre estos elementos.
 
 .. note::
 
-    The ``Item`` element is often used as a container for other elements, similar to the *div* element in HTML.
+    El elemento ``Item`` es normalmente usado como contenedor de otros elementos, similar al elemento *div* en HTML.
 
-Rectangle Element
+Elemento Rectangulo
 -----------------
 
 .. issues:: ch04
 
-The ``Rectangle`` extends ``Item`` and adds a fill color to it. Additionally it supports borders defined by ``border.color`` and ``border.width``. To create rounded rectangles you can use the ``radius`` property.
+El elemento ``Rectangle`` extiende ``Item`` y agrega un color a este mismo. Adicionalmente soporta perimetors definido por ``border.color`` y ``border.width``. Para crear un rectangulo achatado puedes usar la propiedad ``radious``. 
 
 .. literalinclude:: src/concepts/RectanglesExample2.qml
     :start-after: M1>>
@@ -176,10 +176,9 @@ The ``Rectangle`` extends ``Item`` and adds a fill color to it. Additionally it 
 
 .. note::
 
-    Valid colors values are colors from the SVG color names (see  http://www.w3.org/TR/css3-color/#svg-color). You can provide colors in QML in different ways, but the most common way is an RGB string ('#FF4444') or as a color name (e.g. 'white').
+    Hay nombres de colores que son validos como los nombres de colores de un SVG (ve  http://www.w3.org/TR/css3-color/#svg-color). Puedes proveer colores a QML en diferentes maneras, pero el mas usado es la cadena de RGB ('#FF4444') o un nombre de color (ejemplo: 'white').
 
-Besides a fill color and a border the rectangle also supports custom gradients.
-
+Aparte del color de relleno y borde, el rectangulo tambien soporta gradientes personalizados.
 
 .. literalinclude:: src/concepts/RectanglesExample3.qml
     :start-after: M1>>
@@ -187,17 +186,17 @@ Besides a fill color and a border the rectangle also supports custom gradients.
 
 .. figure:: assets/rectangle3.png
 
-A gradient is defined by a series of gradient stops. Each stop has a position and a color. The position marks the position on the y-axis (0 = top, 1 = bottom). The color of the ``GradientStop`` marks the color at that position.
+Un gradiente es definido como una serie de paradas de gradiente. Cada parada tiene una posición y un color. La posición marca el posicionamiento en el eje y (0 = arriba, 1= abajo). El color de ``GradientStop`` marca el color de esa posición.
 
 .. note::
 
-    A rectangle with no *width/height* set will not be visible. This happens often when you have several rectangles width (height) depending on each other and something went wrong in your composition logic. So watch out!
+	Un rectángulo sin *width/height* no sera visible. Esto pasa normalmente cuando tienes bastantes anchos(altos) de los rectángulos dependiendo de las propiedades de los otros rectángulos y algo va mal en tu lógica de composición. Ponte atento!
 
 .. note::
 
-    It is not possible to create an angled gradient. For this it's better to use predefined images. One possibility would be to just rotate the rectangle with the gradient, but be aware the geometry of an rotated rectangle will not change and thus will lead to confusion as the geometry of the element is not the same as the visible area. From the authors perspective it's really better to use designed gradient images in that case.
+	No es posible el crear un gradiente inclinado. Para esto, es mejor el usar imágenes predefinidas. Una posibilidad puede ser que puedas rotar el rectángulo con el gradiente, pero debes de estar consiente de la geometría de un rectángulo inclinado no cambiara y entonces llegara a confusión cuando la geometría del elemento no es la misma que el área visible. Desde la perspectiva del autor, es mucho mejor el usar imágenes con gradientes diseñados en este caso.
 
-Text Element
+Elementos de Texto
 ------------
 
 .. issues:: ch04
