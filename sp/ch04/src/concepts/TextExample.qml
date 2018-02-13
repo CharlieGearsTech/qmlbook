@@ -25,20 +25,22 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-// TextExample.qml
+//properties.qml
+import QtQuick 2.10
+import QtQuick.Window 2.3
 
-import QtQuick 2.5
+Window{
+    visible: true
+    Rectangle{
+        width: 400; height: 120
 
-Rectangle {
-    width: 400
-    height: 120
-
-    // M1>>
-    Text {
-        text: "The quick brown fox"
-        color: "#303030"
-        font.family: "Ubuntu"
-        font.pixelSize: 28
-    }
+        // M1>>
+        Text{
+            text: "The quick brown fox"
+            color: "#303030"
+            font.family: "Ubuntu"
+            font.pixelSize: 28
+        }
     // <<M1
+    }
 }

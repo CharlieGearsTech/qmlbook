@@ -201,7 +201,7 @@ Elementos de Texto
 
 .. issues:: ch04
 
-To display text, you can use the ``Text`` element. Its most notable property is the ``text`` property of type ``string``. The element calculates its initial width and height based on the given text and the font used. The font can be influenced using the font property group (e.g. ``font.family``, ``font.pixelSize``, ...). To change the color of the text just use the color property.
+Para desplegar texto, puedes usar el elemento ``Text``. La propiedad más notable de ``Text`` es la propiedad ``text`` de tipo ``string``. El elemento calcula su ancho y altura inicial basado en el texto y fuente que fue dado. La fuente puede ser modificado usando el grupo de propiedades de font (por ejemplo, ``font.family``,``font.pixelSize``,...). Para cambiar el color del texto solo usa la propiedad ``color``.
 
 .. literalinclude:: src/concepts/TextExample.qml
     :start-after: M1>>
@@ -211,33 +211,32 @@ To display text, you can use the ``Text`` element. Its most notable property is 
 
 .. figure:: assets/text.png
 
-Text can be aligned to each side and the center using the ``horizontalAlignment`` and ``verticalAlignment`` properties. To further enhance the text rendering you can use the ``style`` and ``styleColor`` property , which allows you render the text in outline, raised and sunken mode. For longer text you often want to define a *break* position like *A very ... long text*, this can be achieved using the ``elide`` property. The ``elide`` property allows you to set the elide position to the left, right or middle of your text. In case you don't want the '...' of the elide mode to appear but still want to see the full text you can also wrap the text using the ``wrapMode`` property (works only when width is explicitly set)::
+Texto puede ser alineado a cada extremo o centro del elemento usando las propiedades ``horizontalAlignment`` y ``verticalAlignment``. Para realzar la calidad del texto puedes usar las propiedades ``style`` y ``styleColor``, cuales te permiten renderizar el texto en modo enlineado, resaltado y sumergido. Para textos más largos, querras definir una posición *break* como * Un extenso... largo texto*, esto puede ser realizado usando la propiedad ``elide``. La propiedad ``elide`` te permite crear una posición de supresión a la izquierda, derecha o en medio de tu texto. En caso de que no quieras el '...' del modo elide para aparecer pero aún quieres ver el texto completo, también puedes envolver el texto usando la propiedad ``wrapMode`` (funciona unicamente cuando el ancho fue puesto explícitamente):
 
     Text {
         width: 40; height: 120
         text: 'A very long text'
-        // '...' shall appear in the middle
+        // '...' deberia aparecer enmedio
         elide: Text.ElideMiddle
-        // red sunken text styling
+        // Estilo de texto sumergido rojo
         style: Text.Sunken
         styleColor: '#FF4444'
-        // align text to the top
+        // Alinea el texto hacia arriba
         verticalAlignment: Text.AlignTop
-        // only sensible when no elide mode
+        // Sensible cuando el elide mode no ha sido establecido
         // wrapMode: Text.WordWrap
     }
 
-A ``Text`` element only displays the given text. It does not render any background decoration. Besides the rendered text the ``Text`` element is transparent. It's part of your overall design to provide a sensible background to the text element.
+Un elemento ``Text`` solo despliega el texto dado. No renderiza ninguna decoración del fondo. Por otro lado, el texto renderizado, el elemento ``Text`` es transparente. Es parte del diseño completo para proveer un fondo sensible a los elementos de texto.
+
+.. note::
+		Se conciente que el ancho ( y alto) inicial de ``Text`` depende de la cadena de texto y de la fuente establecida. Un elemento ``Text`` que no tiene ancho establecido ni texto, no sera visible, debido a que su ancho inicial va a ser 0.
 
 .. note::
 
-    Be aware a ``Text`` initial width (height) is depending on the text string and on the font set. A ``Text`` element with no width set and no text will not be visible, as the initial width will be 0.
+		Normalmente cuando quieres alienar elementos de ``Text`` necesitas diferencias entre alinear el texto dentro del perimetro del rectangulo del elemento ``Text`` o alinear el perimetro del rectangulo por si mismo. En el caso que quieras usar las propiedades ``horizontalAlignment`` y ``verticalAlignment`` en el ultimo caso querras manipular la geometria del elemento usando anclas.
 
-.. note::
-
-    Often when you want to layout ``Text`` elements you need to differentiate between aligning the text inside the ``Text`` element boundary box or to align the element boundary box itself. In the former you want to use the ``horizontalAlignment`` and ``verticalAlignment`` properties and in the later case you want to manipulate the element geometry or use anchors.
-
-Image Element
+Elemento de Imagen
 -------------
 
 .. issues:: ch04
