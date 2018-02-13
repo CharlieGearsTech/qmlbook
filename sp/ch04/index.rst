@@ -234,14 +234,14 @@ Un elemento ``Text`` solo despliega el texto dado. No renderiza ninguna decoraci
 
 .. note::
 
-		Normalmente cuando quieres alienar elementos de ``Text`` necesitas diferencias entre alinear el texto dentro del perimetro del rectangulo del elemento ``Text`` o alinear el perimetro del rectangulo por si mismo. En el caso que quieras usar las propiedades ``horizontalAlignment`` y ``verticalAlignment`` en el ultimo caso querras manipular la geometria del elemento usando anclas.
+		Normalmente cuando quieres alinear elementos de ``Text`` necesitas diferencias entre alinear el texto dentro del perímetro del rectángulo del elemento ``Text`` o alinear el perímetro del rectángulo por si mismo. En el caso que quieras usar las propiedades ``horizontalAlignment`` y ``verticalAlignment`` en el ultimo caso querrás manipular la geometría del elemento usando anclas.
 
 Elemento de Imagen
 -------------
 
 .. issues:: ch04
 
-An ``Image`` element is able to display images in various formats (e.g. PNG, JPG, GIF, BMP, WEBP). *For the full list of supported image formats, please consult the Qt documentation*. Besides the obvious ``source`` property to provide the image URL it contains a ``fillMode`` which controls the resizing behavior.
+Un elemento ``Image`` puede desplegar imágenes de varios formatos (ejemplo, PNG, JPG, GIF, BMP, WEBP). * Para la lista completa de los formatos de imagenes soportados, consulta la documentación de Qt*. Aparte de la propiedad obvia ``source`` para proveer la URL de la imagen, ``Image`` contiene una propiedad ``fillMode`` que controla el comportamiento de modificación de tamaño.
 
 .. literalinclude:: src/concepts/ImageExample.qml
     :start-after: M1>>
@@ -251,15 +251,14 @@ An ``Image`` element is able to display images in various formats (e.g. PNG, JPG
 
 .. note::
 
-    A URL can be a local path with forward slashes ( "./images/home.png" ) or a web-link (e.g. "http://example.org/home.png").
+    Una URL puede ser una direccion local con diagonales hacia la derecha ("./images/home.png") o un link de la web (ejemplo "http://example.org/home.png").
 
 .. note::
 
-    ``Image`` elements using ``PreserveAspectCrop`` should also enable the clipping to avoid image data being rendered outside the ``Image`` boundaries. By default clipping is disabled (``clip : false``). You  need to enable clipping (``clip : true``) to constrain the painting to the elements bounding rectangle. This can be used on any visual element.
+		Elementos ``Image`` usando la propiedad ``PreserveAspectCrop`` tambien deberan permitir el recorte para evitar que los datos de la imagen sean renderizados afuera del perímetro de ``Image``. Por defecto, recorte esta deshabilitado (``clip: false``). Necesitas permitir recorte (``clip: true``) para contener el pintado de los elementos en su rectángulo de perímetro. Esto puede ser usado en cualquier elemento visual.
 
 .. tip::
-
-    Using C++ you are able to create your own image provider using :qt5:`QQmlImageProvider <qqmlimageprovider>`. This allows you to create images on the fly and threaded image loading.
+		Usando C++, puedes crear tu propio proveedor de imágenes usando : qt%:`QQmlImageProvider <qqmlimageprovider>`. Esto permite crear imágenes al vuelo y enhilar carga de imagen.
 
 MouseArea Element
 -----------------
