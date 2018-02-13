@@ -25,30 +25,29 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-// reusable_component.qml
+import QtQuick 2.10
+import QtQuick.Window 2.3
 
-import QtQuick 2.5
-
-Rectangle {
-    width: 140
-    height: 120
-
-    // M1>>
-    Button { // our Button component
-        id: button
-        x: 12; y: 12
-        text: "Start"
-        onClicked: {
-            status.text = "Button clicked!"
+Window{
+    visible: true
+    width:200; height:120
+    Rectangle{
+        width: 140; height:120
+        // M1>>
+        Button{ //Nuestro componente Button
+            id: button
+            x:12; y:12
+            text: "Start"
+            onClicked: {
+            }
         }
-    }
-
-    Text { // text changes when button was clicked
-        id: status
-        x: 12; y: 76
-        width: 116; height: 26
-        text: "waiting ..."
-        horizontalAlignment: Text.AlignHCenter
-    }
+        Text{
+            id:status
+            x:12;y:76
+            width:116; height:26
+            text: "waiting..."
+            horizontalAlignment: Text.AlignHCenter
+        }
     // <<M1
+    }
 }

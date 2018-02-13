@@ -258,14 +258,14 @@ Un elemento ``Image`` puede desplegar imágenes de varios formatos (ejemplo, PNG
 		Elementos ``Image`` usando la propiedad ``PreserveAspectCrop`` tambien deberan permitir el recorte para evitar que los datos de la imagen sean renderizados afuera del perímetro de ``Image``. Por defecto, recorte esta deshabilitado (``clip: false``). Necesitas permitir recorte (``clip: true``) para contener el pintado de los elementos en su rectángulo de perímetro. Esto puede ser usado en cualquier elemento visual.
 
 .. tip::
-		Usando C++, puedes crear tu propio proveedor de imágenes usando : qt%:`QQmlImageProvider <qqmlimageprovider>`. Esto permite crear imágenes al vuelo y enhilar carga de imagen.
+		Usando C++, puedes crear tu propio proveedor de imágenes usando :qt5:`QQmlImageProvider <qqmlimageprovider>`. Esto permite crear imágenes al vuelo y enhilar carga de imagen.
 
-MouseArea Element
+Elemento de Área de Ratón
 -----------------
 
 .. issues:: ch04
 
-To interact with these elements you often will use a ``MouseArea``. It's a rectangular invisible item in where you can capture mouse events. The mouse area is often used together with a visible item to execute commands when the user interacts with the visual part.
+Para interaccionar con estos elementos, normalmente usaras un ``MouseArea``. ``MouseArea`` es un elemento rectangular invisible donde puedes capturar eventos del ratón. El Área de Ratón es normalmente usado junto con un elemento visible para ejecutar comandos cuando el usuario interaccioná con esta parte visual.
 
 .. literalinclude:: src/concepts/MouseAreaExample.qml
     :start-after: M1>>
@@ -278,26 +278,24 @@ To interact with these elements you often will use a ``MouseArea``. It's a recta
         - .. figure:: assets/mousearea2.png
 
 .. note::
-
-    This is an important aspect of Qt Quick, the input handling is separated from the visual presentation. By this it allows you to show the user an interface element, but the interaction area can be larger.
-
-Components
+		Este es un aspecto importante de Qt Quick, el manipulador de entrada esta separado de la presentación visual. Esto te permite mostrar al usuario un elemento de interfaz, pero el área de interacción puede ser mas grande.
+		
+Componentes
 ==========
 
 .. issues:: ch04
 
 .. index:: components
 
-A component is a reusable element and QML provides different ways to create components. Currently we will look only at the simplest form - a file based component. A file based component is created by placing a QML element in a file and give the file an element name (e.g. ``Button.qml``). You can use the component like every other element from the QtQuick module, in our case you would use this in your code as ``Button { ... }``.
+Un componente es un elemento reusable, QML provee diferentes maneras de crear componentes. Actualmente veremos unicamente a la forma mas simple- un componente basado en archivos. Un componente basado en archivo es creado al agregar un elemento QML en un archivo y dar al archivo un nombre de elemento (por ejemplo, ``Button.qml``). Puedes usar este componente como cualquier otro componente del modulo de QtQuick, en nuestro caso, usarías este en tu código como ``Button{...}``.
 
-For example, let's create a rectangle containing a text componenet and a mouse area. This resembles a simple button and doesn't need to be more complicated for our purposes.
-
+Por ejemplo, vamos a crear un rectángulo conteniendo un componente de texto y una área de ratón. Esto compone un botón simple y no necesita ser mas complicado para nuestros propósito
 
 .. literalinclude:: src/elements/InlinedComponentsExample.qml
     :start-after: M1>>
     :end-before: <<M1
 
-The UI will look similar to this. On the left the UI in the initial state, on the right after the button has been clicked.
+El UI se vera similar a esto. A la izquierda del UI esta el estado inicial, en la derecha después de que el botón fue presionado.
 
 .. list-table::
     :widths: 50 50
@@ -305,38 +303,37 @@ The UI will look similar to this. On the left the UI in the initial state, on th
     *   - .. figure:: assets/button_waiting.png
         - .. figure:: assets/button_clicked.png
 
-
-Our task is now to extract the button UI in a reusable component. For this we shortly think about a possible API for our button. You can do this by imagining how someone else should use your button. Here's what I came up with:
+Nuestro trabajo ahora es de extraer el UI del botón en un componente re-utilizable. Para hacer esto, podemos pensar por una posible API para nuestro botón. Puedes hacer esto imaginando como alguien mas debería usar tu botón. Esto es lo que encontré:
 
 .. code-block:: js
 
-    // minimal API for a button
+    // API minimo para un boton
     Button {
-        text: "Click Me"
-        onClicked: { // do something }
+        text: "Presioname"
+        onClicked: { // Haz algo }
     }
 
-I would like to set the text using a ``text`` property and to implement my own click handler. Also I would expect the button to have a sensible initial size, which I can overwrite (e.g. with ``width: 240`` for example).
+Me gustaría establecer el texto usando una propiedad ``text`` e implementar mi propio manipulador de clicks. Ademas, yo esperaría que el botón tuviera un tamaño inicial sensible, el cual yo pueda sobrescribir (ejemplo, con ``width: 240``).
 
-To achieve this we create a ``Button.qml`` file and copy our button UI inside. Additionally we need to export the properties a user might want to change on the root level.
+Para cumplir con esto, hemos creado un archivo ``Button.qml`` y copiar adentro nuestro UI del botón. Adicionalmente, necesitamos exportar las propiedades que el usuario quisiera cambiar en el nivel base.
 
 .. literalinclude:: src/elements/Button.qml
     :start-after: M1>>
     :end-before: <<M1
 
-We have exported the text and clicked signal on the root level. Typically we name our root element root to make the referencing easier. We use the ``alias`` feature of QML, which is a way to export properties inside nested QML elements to the root level and make this available for the outside world. It is important to know, that only the root level properties can be accessed from outside this file by other components.
+Hemos exportado el texto y la senal de click para el nivel de la base. Tipicamente, llamamos nuestro elemento base como root para hacer la referencia mas facil. Usamos el rasgo de QML ``alias``, que es una manera de exportar propiedades dentro de elementos QML anidados para el nivel base, y hacerlos accesibles al mundo exterior. Es importante saber, que solamente las propiedades de nivel de la base pueden ser accedidos desde afuera del archivo por otros componentes.
 
-To use our new ``Button`` element we can simply declare it in our file. So the earlier example will become a little bit simplified.
+Para usar nuestro nuevo elemento ``Button``, podemos simplemente declararlo en nuestro archivo. En el ejemplo anterior puede convertirse un poco simplificado:
 
 .. literalinclude:: src/elements/ReusableComponentExample.qml
     :start-after: M1>>
     :end-before: <<M1
 
-Now you can use as many buttons as you like in your UI by just using ``Button { ... }``. A real button could be more complex, e.g providing feedback when clicked or showing a nicer decoration.
+Ahora puedes usar tantos botones como tu quieras en tu UI usando nada mas ``Button{...}``. Un botón real puede ser mas complejo, por ejemplo, ofreciendo retroalimentación cuando es presionado y mostrar una decoración mas amigable.
 
 .. note::
 
-    Personally you could even go a step further and use an item as a root element. This prevents users to change the color of our designed button, and provides us more control about the exported API. The target should be to export a minimal API. Practically this means we would need to replace the root ``Rectangle`` with an ``Item`` and make the rectangle a nested element in the root item.
+    Puedes incluso ir un paso mas adelante y usar un artículo  como un elemento base. Esto previene usuarios de cambiar el color de nuestro botón diseñado, y nos provee con mayor control acerca de la API exportada. El objetivo debe ser exportar una API mínima. Prácticamente, esto significa que podríamos necesitar reemplazar la base ``Rectangle`` con un ``Item`` y hacer el rectángulo un elemento anidado con el articulo base.
 
     |
 
@@ -357,9 +354,9 @@ Now you can use as many buttons as you like in your UI by just using ``Button { 
             ...
         }
 
-With this technique, it is easy to create a whole series of reusable components.
+Con este técnica, es fácil crear series completas de componentes re utilizables.
 
-Simple Transformations
+Transformaciones Simples
 ======================
 
 .. issues:: ch04

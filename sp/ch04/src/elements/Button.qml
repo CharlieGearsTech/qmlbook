@@ -32,7 +32,7 @@ import QtQuick 2.5
 
 Rectangle {
     id: root
-    // export button properties
+    // propiedades de boton para exportar
     property alias text: label.text
     signal clicked
 

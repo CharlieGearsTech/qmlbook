@@ -25,39 +25,37 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-// inlined_component.qml
 
-import QtQuick 2.5
+import QtQuick 2.10
+import QtQuick.Window 2.3
 
-Rectangle {
-    width: 140
-    height: 120
+Window{
+    visible: true
+    width:200; height:120
 
     // M1>>
-    Rectangle { // our inlined button ui
+    Rectangle{// nuestro buton enlineado
         id: button
-        x: 12; y: 12
+        x:12;y:12
         width: 116; height: 26
         color: "lightsteelblue"
         border.color: "slategrey"
-        Text {
+        Text{
             anchors.centerIn: parent
             text: "Start"
         }
-        MouseArea {
+        MouseArea{
             anchors.fill: parent
             onClicked: {
-                status.text = "Button clicked!"
+                status.text= "Button clicked!"
             }
         }
     }
-
-    Text { // text changes when button was clicked
+    Text{
         id: status
-        x: 12; y: 76
+        x:12 ;y: 76
         width: 116; height: 26
-        text: "waiting ..."
+        text: "waiting..."
         horizontalAlignment: Text.AlignHCenter
     }
-    // <<M1
 }
