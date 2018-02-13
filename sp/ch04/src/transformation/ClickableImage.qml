@@ -28,18 +28,18 @@
 // M1>>
 // ClickableImage.qml
 
-// Simple image which can be clicked
+// Imagen simple para clickear
+import QtQuick 2.10
+import QtQuick.Window 2.3
 
-import QtQuick 2.5
 
-Image {
-    id: root
+Image{
+    id:root
     signal clicked
 
-    MouseArea {
+    MouseArea{
         anchors.fill: parent
         onClicked: root.clicked()
     }
 }
 
-// <<M1

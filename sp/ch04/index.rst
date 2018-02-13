@@ -363,23 +363,21 @@ Transformaciones Simples
 
 .. index:: Transformation, Translation, Rotation, Scaling, ClickableImage Helper, Stacking order
 
-A transformation manipulates the geometry of an object. QML Items can in general be translated, rotated and scaled. There is a simple form of these operations and a more advanced way.
+Una transformación manipula la geometría de un objeto. Artículos de QML pueden en general ser trasladados, girados o escalados. Hay una simple forma para realizar estas operaciones y una forma mas avanzada.
 
-Let's start with the simple transformations. Here is our scene as our starting point.
+Vamos a comenzar con una transformación simple. Aquí esta nuestra escena como nuestro punto de partida.
 
-A simple translation is done via changing the ``x,y`` position. A rotation is done using the ``rotation`` property. The value is provided in degrees (0 .. 360). A scaling is done using the ``scale`` property and a value <1 means the element is scaled down and ``>1`` means the element is scaled up. The rotation and scaling does not change your geometry. The items ``x,y`` and ``width/height`` haven't changed. Just the painting instructions are transformed.
+Una traslación simple es hecha cambiando las posiciones ``x,y``. Una rotación es hecha usando la propiedad ``rotation``. El valor esta en grados (0 ... 360). Una escalada es hecha usando la propiedad ``scale`` y un valor ``<1`` significa que el elemento es reducido, y ``>1`` significa que el elemento es aumentado. La rotación y escalado no cambian la geometría del articulo. Los valores ``x,y`` del articulo y ``width/height`` no han cambiado; solamente las instrucciones han sido transformados.
 
-Before we show off the example I would like to introduce a little helper: The ``ClickableImage`` element. The ``ClickableImage`` is just an image with a mouse area. This brings up a useful rule of thumb - if you have copied a chunk of code three times, extract it into a component.
+Antes de demostrar un ejemplo, quisiera introducir una pequeña ayuda: El elemento ``ClickableImage``. Este elemento es solo una imagen con una área de ratón. Esto conlleva una regla de pulgar bastante útil- si vas a copiar un paquete de código 3 veces, extrae este paquete dentro de un componente.
 
 .. literalinclude:: src/transformation/ClickableImage.qml
     :start-after: M1>>
     :end-before: <<M1
 
-
 .. figure:: assets/objects.png
 
-We use our clickable image to present three objects (box, circle, triangle). Each object performs a simple transformation when clicked. Clicking the background will reset the scene.
-
+Usamos nuestra imagen clickeable para presentar 3 objectos (caja, circulo, y triangulo). Cada objeto realiza una simple transformación cuando es presionado. Presionando el fondo se restablecera el escenario.
 
 .. literalinclude:: src/transformation/TransformationExample.qml
     :start-after: M1>>
@@ -387,27 +385,25 @@ We use our clickable image to present three objects (box, circle, triangle). Eac
 
 .. figure:: assets/objects_transformed.png
 
-The circle increments the x-position on each click and the box will rotate on each click. The triangle will rotate and scale the image down on each click, to demonstrate a combined transformation. For the scaling and rotation operation we set ``antialiasing: true`` to enable anti-aliasing, which is switched off (same as the clipping property ``clip``) for performance reasons.  In your own work, when you see some rasterized edges in your graphics, then you should probably switch smooth on.
-
-
-.. note::
-
-    To achieve better visual quality when scaling images it is recommended to scale images down instead of up. Scaling an image up with a larger scaling factor will result into scaling artifacts (blurred image). When scaling an image you should consider using ``antialiasing : true`` to enable the usage of a higher quality filter.
-
-
-The background ``MouseArea`` covers the whole background and resets the object values.
+El circulo incrementa su posición x en cada click, y la caja rotara en cada click. El triangulo rotara y escalara la imagen en cada click, para demostrar la transformación combinada. Para las operaciones de escalación y rotación estableceremos ``antialiasing: true`` para permitir anti-aliasing, cual no es activado defecto (como la propiedad de recorte ``clip``) debido a razones de rendimiento. En tu propio trabajo, cuando veas  puntas rasterizadas en tus gráficos, entonces deberías activar ``smooth``.
 
 .. note::
 
-    Elements which appear earlier in the code have a lower stacking order (called z-order). If you click long enough on ``circle`` you will see it moves below ``box``. The z-order can also be manipulated by the ``z-property`` of an Item.
+    Para obtener una mejor calidad visual cuando escales imágenes, es recomendado reducir imágenes en vez de aumentarlas. Aumentando una imagen con un factor de escala alto resultara en artefactos de escala (imágenes borrosas). Cuando escales tu imagen, deberías considerar usar ``antialiasing: true`` para permitir el uso del filtro de mejor calidad.
+
+El ``MouseArea`` del fondo esta en todo el fondo, y restablece los valores de los objetos.
+
+.. note::
+
+    Elementos que aparecen al principio del código tienen un ordenamiento menor en la cola (llamado ordenamiento-Z). Si das un largo click en ``circle`` veras que se mueve abajo de ``box``. El ordenamiento-Z puede ser manipulado por la propiedad ``z`` en el articulo.
 
     .. figure:: assets/objects_overlap.png
 
-    This is because ``box`` appears later in the code. The same applies also to mouse areas. A mouse area later in the code will overlap (and thus grab the mouse events) of a mouse area earlier in the code.
+    Esto es debido a que ``box`` aparece después en el código. Lo mismo aplica en las áreas de ratón. Una área de ratón al final del código estará encima (y atrapara los eventos de mouse) que las áreas de ratón que están al principio del código.
+    
+    Recuerda *El orden de los elementos en el documento importa*
 
-    Please remember: *The order of elements in the document matters*.
-
-Positioning Elements
+Elementos de Posicionamiento.
 ====================
 
 .. issues:: ch04
