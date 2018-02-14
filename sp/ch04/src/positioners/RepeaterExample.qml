@@ -34,17 +34,19 @@ DarkSquare {
     id: root
     width: 252
     height: 252
+    //Usando variant podemos declarar arreglos,.
     property variant colorArray: ["#00bde3", "#67c111", "#ea7025"]
-
 
     Grid{
         anchors.fill: parent
         anchors.margins: 8
         spacing: 4
+        //Repite el elemento model- veces.
         Repeater {
             model: 16
             Rectangle {
                 width: 56; height: 56
+                //Es asignado en cada modelo de Rectangulo
                 property int colorIndex: Math.floor(Math.random()*3)
                 color: root.colorArray[colorIndex]
                 border.color: Qt.lighter(color)

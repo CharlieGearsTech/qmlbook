@@ -410,22 +410,21 @@ Elementos de Posicionamiento.
 
 .. index:: Row, Column, Grid, Repeater, Flow, Square Helper
 
-There are a number of QML elements used to position items. These are called positioners and the following are provided in the QtQuick module ``Row``, ``Column``, ``Grid`` and ``Flow``. They can be seen showing the same contents in the illustration below.
+Hay un numero de elementos de QML usados para posicionar artículos. Estos son llamados posicionadores y los siguientes están en el modulo QtQuick ``Row``,``Column``, ``Grid`` and ``Flow``. Ellos pueden ser mostrados con el mismo contenido en la ilustración de abajo.
 
 .. todo: illustration showing row, grid, column and flow side by side showing four images
 
 .. note::
 
-    Before we go into details, let me introduce some helper elements. The red, blue, green, lighter and darker squares. Each of these components contains a 48x48 pixels colorized rectangle. As reference here is the source code for the ``RedSquare``:
+    Antes de entrar a detalles, dejame introducir algunos elementos de ayuda. Los cuadrados, rojos, verdes, transparentes y opacos. Cada uno de estos componentes contienen un rectángulo coloreado por 48x48 pixeles. Como referencia aquí esta el código fuente de ``RedSquare``.
 
     .. literalinclude:: src/positioners/RedSquare.qml
         :start-after: M1>>
         :end-before: <<M1
 
-    Please note the use of ``Qt.lighter(color)`` to produce a lighter border color based on the fill color. We will use these helpers in the next examples to make the source code more compact and hopefully readable. Please remember, each rectangle is initial 48x48 pixels.
+    Nota que el uso de ``Qt.lighter(color`` produce un color de borde mas transparente en el color de fondo. Vamos a usar estos elementos de ayuda en los siguientes ejemplos para hacer el codigo fuente mas compato y posiblemente mas entendible. Recuerda que cada rectangulo es 48x48 pixeles inicialmente.
 
-
-The ``Column`` element arranges child items into a column by stacking them on top of each other. The ``spacing`` property can be used to distance each of the child elements from each other.
+El elemento ``Columna`` acomoda artículos hijos dentro de una columna, enpilandolos arriba de cada uno. La propiedad ``spacing`` puede ser usado para distanciar cada uno de los elementos hijos entre ellos.
 
 .. figure:: assets/column.png
 
@@ -441,7 +440,7 @@ The ``Row`` element places its child items next to each other, either from the l
     :start-after: M1>>
     :end-before: <<M1
 
-The ``Grid`` element arranges its children in a grid, by setting the ``rows`` and ``columns`` properties, the number or rows or columns can be constrained. By not setting either of them, the other is calculated from the number of child items. For instance, setting rows to 3 and adding 6 child items will result in 2 columns. The properties ``flow`` and ``layoutDirection`` are used to control the order in which the items are added to the grid, while ``spacing`` controls the amount of space separating the child items.
+El elemento ``Grid`` acomoda sus hijos en una cuadricula, estableciendo las propiedades ``row`` y ``columns``, el numero de filas y columnas pueden ser limitadas. Al no establecer ninguno de los dos, el orden es calculado desde el numero de artículos hijos. Como instancia, estableciendo filas de 3 y añadiendo 6 artículos hijos, resultara en 2 columnas. Las propiedades ``flow`` y ``layoutDirection`` son usados para el control del orden en cual los artículos son añadidos a la cuadricula, mientras ``spacing`` controla la cantidad de espacio que separa los artículos hijos.
 
 .. figure:: assets/grid.png
 
@@ -449,7 +448,7 @@ The ``Grid`` element arranges its children in a grid, by setting the ``rows`` an
     :start-after: M1>>
     :end-before: <<M1
 
-The final positioner is ``Flow``. It adds its child items in a flow. The direction of the flow is controlled using ``flow`` and ``layoutDirection``. It can run sideways or from the top to the bottom. It can also run from left to right or in the opposite direction. As the items are added in the flow, they are wrapped to form new rows or columns as needed. In order for a flow to work, it must have a width or a height. This can be set either directly, or though anchor layouts.
+El posicionador final es ``Flow``. ``Flow`` agrega sus artículos hijos en un flujo. La dirección del flujo es controlado mediante ``flow`` y ``layoutDirection``. Puede correr por los lados, o de arriba para abajo. Puede correr a la izquierda o en la dirección opuesta. Como sus artículos son agregados al flujo, ellos pueden ser envueltos en forma de nuevas columnas y filas como sean necesarios. En orden de que un flujo funcione, debe de tener un ancho y algo. Esto puede ser establecido directamente o mediante trazas de anclas.
 
 .. figure:: assets/flow.png
 
@@ -457,7 +456,7 @@ The final positioner is ``Flow``. It adds its child items in a flow. The directi
     :start-after: M1>>
     :end-before: <<M1
 
-An element often used with positioners is the ``Repeater``. It works like a for-loop and iterates over a model. In the simplest case a model is just a value providing the amount of loops.
+Un elemento que es usado normalmente con posicionadores es ``Repeater``. Funciona como un ciclo for e itera el modelo. En el caso mas simple, el modelo es solamente un valor provenido la cantidad de ciclos.
 
 .. figure:: assets/repeater.png
 
@@ -465,15 +464,15 @@ An element often used with positioners is the ``Repeater``. It works like a for-
     :start-after: M1>>
     :end-before: <<M1
 
-In this repeater example, we use some new magic. We define our own color property, which we use as an array of colors. The repeater creates a series of rectangles (16, as defined by the model). For each loop he creates the rectangle as defined by the child of the repeater. In the rectangle we chose the color by using JS math functions ``Math.floor(Math.random()*3)``. This gives us a random number in the range from 0..2, which we use to select the color from our color array. As noted earlier, JavaScript is a core part of Qt Quick, as such the standard libraries are available for us.
+En este ejemplo de repetidor, usamos algo de magia. Aquí definimos nuestro propia propiedad color, que usamos como un arreglo de colores. El repetidor crea una seria de rectángulos (16, como define la propiedad ``model``) En cada ciclo el repetidor crea el rectángulo definido por su hijo. En el rectángulo, escogimos el color usando la función math de JS ``Math.floor(Math.random()*3)``.Esto nos da un numero aleatorio en el rango de 0..2, que usamos para seleccionar un color desde nuestro arreglo de color. Como explicamos anteriormente, JavaScript es una parte central de Qt Quick, como también las librerías estándares están disponibles para nosotros.
 
-A repeater injects the ``index`` property into the repeater. It contains the current loop-index. (0,1,..15). We can use this to make our own decisions based on the index, or in our case to visualize the current index with the ``Text`` element.
+Un repetidor inyecta la propiedad ``index``.``index`` contiene el indice actual del ciclo (0,1,...,15). Nosotros podemos usar esto para realizar nuestras propias decisiones basados en el indice; o en nuestro caso, visualizar el indice actual con el elemento ``Texto``.
 
 .. note::
 
-    More advanced handling of larger models and kinetic views with dynamic delegates is covered in an own model-view chapter. Repeaters are best used when having a small amount of static data to be presented.
+		Manejadores mas avanzados de modelos mas largos y vistas quinéticas con delegados dinámicos es cubierto en nuestro capitulo de Modelo-Vista. Repetidores son mejores usados cuando tienes un pequeño conjunto de datos estáticos para ser presentados.
 
-Layout Items
+Articulos de Trazo
 ============
 
 .. issues:: ch04
