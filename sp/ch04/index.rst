@@ -481,56 +481,56 @@ Articulos de Trazo
 
 .. todo:: do we need to remove all uses of anchors earlier?
 
-QML provides a flexible way to layout items using anchors. The concept of anchoring is part of the ``Item`` fundamental properties and available to all visual QML elements. An anchors acts like a contract and is stronger than competing geometry changes. Anchors are expressions of relativeness, you always need a related element to anchor with.
+QML provee una manera flexible de trazar artículos usando anclas. El concepto de anclar es parte de las propiedades fundamentales de ``Item`` y esta disponible para todos los elementos visuales de QML. Una ancla actuá como si fuera un contrato y es mas fuerte que la competencia de cambios geométricos. Anclas son expresiones de relativismo, tu siempre necesitaras un elemento relacionado con un ancla.
 
 .. figure:: assets/anchors.png
 
-An element has 6 major anchor lines (top, bottom, left, right, horizontalCenter, verticalCenter). Additional there is the baseline anchor for text in Text elements. Each anchor line comes with an offset. In the case of top, bottom, left and right they are called margins. For horizontalCenter, verticalCenter and baseline they are called offsets.
+Un elemento tiene 6 lineas principales de anclas (arriba, abajo, izquierda, derecha, centro Horizontal, centro Vertical). Adicionalmente esta la ancla de linea base para texto en elementos de ``Text`` Cada linea de ancla viene con un indice. En el caso de arriba, abajo, izquierda, y derecha, ellos son llamados margenes. Para centro Horizontal, centro Vertical y linea base, ellos son llamados offsets.
 
 .. figure:: assets/anchorgrid.png
 
-#. An element fills a parent element
+#. Un elemento llena a su padre.
 
     .. literalinclude:: src/anchors/AnchorsExample.qml
         :start-after: M1>>
         :end-before: <<M1
 
 
-#. An element is left aligned to the parent
+#. Un elemento es alineado a la izquierda de su padre.
 
     .. literalinclude:: src/anchors/AnchorsExample.qml
         :start-after: M2>>
         :end-before: <<M2
 
-#. An element left side is aligned to the parents right side
+#. Un elemento es alineado a la derecha de su padre.
 
     .. literalinclude:: src/anchors/AnchorsExample.qml
         :start-after: M3>>
         :end-before: <<M3
 
-#. Center aligned elements. ``Blue1`` is horizontal centered  on the parent. ``Blue2`` is also horizontal centered but on ``Blue1`` and it's top is aligned to the ``Blue1`` bottom line.
+#. Elementos alineados en el centro. ``Blue1`` es centrado horizontalmente en el padre. ``Blue2`` es también centrado horizontalmente pero con ``Blue1`` linea inferior arriba de su linea superior.
 
     .. literalinclude:: src/anchors/AnchorsExample.qml
         :start-after: M4>>
         :end-before: <<M4
 
 
-#. An element is centered on a parent element
+#. Un elemento es centrado en su padre
 
     .. literalinclude:: src/anchors/AnchorsExample.qml
         :start-after: M5>>
         :end-before: <<M5
 
 
-#. An element is centered with an left-offset on a parent element using horizontal and vertical center lines
+#. Un elemento es centrado en la compensación izquierda en el elemento padre usando lineas de centro verticales y horizontales. 
 
     .. literalinclude:: src/anchors/AnchorsExample.qml
         :start-after: M6>>
         :end-before: <<M6
 
-.. note:: Our squares have been enhanced to enable dragging. Try the example and drag around some squares. You will see that (1) can't be dragged as it's anchored on all sides, sure you can drag the parent of (1) as it's not anchored at all. (2) can be vertically dragged as only the left side is anchored. Similar applies to (3). (4) can only be dragged vertically as both squares are horizontal centered. (5) is centered on the parent and as such can't be dragged, similar applies to (7). Dragging an element means changing their ``x,y`` position. As anchoring is stronger than geometry changes such as ``x,y``, dragging is restricted by the anchored lines. We will see this effect later when we discuss animations.
+.. note:: Nuestros cuadrados han sido mejorados para permitir desplazamiento. Intenta este ejemplo y desplaza algunos cuadrados. Vas a ver que (1) no puede ser desplazado ya que esta anclado en todos sus sitios, claro puedes desplazar el padre de (1) que no esta anclado con nada. (2) puede ser desplazado verticalmente, debido a que su parte izquierda esta anclado. Aplica similarmente con (3). (4) solo puede ser desplazado verticalmente debido a que los dos cuadrados están centrados horizontalmente. (5) esta centrado en el padre, y debido a seso no puede ser desplazado, aplica similar para (7). Desplazar un elemento significa cambiar la posición ``x,y`` de un elemento. Como anclaje es mas fuerte que cambios de geometría como ``x,y``, desplazamiento esta restringido en las lineas ancladas. Vamos a ver este efecto despues cuando discutamos animaciones.
 
-Input Elements
+Elementos de Entrada
 ==============
 
 .. issues:: ch04
@@ -553,17 +553,17 @@ The ``TextInput`` allows the user to enter a line of text. The element supports 
 
 .. figure:: assets/textinput.png
 
-The user can click inside a ``TextInput`` to change the focus. To support switching the focus by keyboard, we can use the ``KeyNavigation`` attached property.
+El usuario puede dar click adentro de un ``TextInput`` para cambiar el enfoque. Para soportar cambios en el enfoque desde el teclado, podemos usar la propiedad adjunta ``KeyNavigation``
 
 .. literalinclude:: src/input/TextInputExample2.qml
     :start-after: M1>>
     :end-before: <<M1
 
-The ``KeyNavigation`` attached property supports a preset of navigation keys where an element id is bound to switch focus on the given key press.
+La propiedad adjunta ``KeyNavigation`` soporta un conjunto preestablecido de botones de navegación donde los ID de los elementos están enlazados con el cambio de enfoque de la especifica llave presionada.
 
-A text input element comes with no visual presentation besides a blinking cursor and the entered text. For the user to be able to recognize the element as an input element it needs some visual decoration, for example a simple rectangle. When placing the ``TextInput`` inside an element you need make sure you export the major properties you want others be able to access.
+Un elemento de entrada de texto viene con ninguna presentación visual, aparte del cursor parpadeante y el texto definido. Para el usuario, reconocer un elemento como elemento de entrada, requiere una decoración visual; por ejemplo un rectángulo simple. Al poner el ``TextInput`` adentro de un elemento, necesitas estar seguro que estas exponiendo las propiedades principales que quieres que otros puedan acceder.
 
-We move this piece of code into our own component called ``TLineEditV1`` for reuse.
+Podemos mover este pedazo de código para nuestro componente llamado ``TLineEditV1`` para re usarlo.
 
 .. literalinclude:: src/input/TLineEditV1.qml
     :start-after: M1>>
@@ -571,10 +571,9 @@ We move this piece of code into our own component called ``TLineEditV1`` for reu
 
 .. note::
 
-    If you want to export the ``TextInput`` completely, you can export the element by using ``property alias input: input``. The first ``input`` is the property name, where the 2nd input is the element id.
+		Si quieres exportar un ``TextInput`` completamente, tu puedes exportar el elemento usando ``property alias input: input``. El primer ``input`` es un nombre de propiedad, donde el segundo input es el ID del elemento.
 
-
-We rewrite our ``KeyNavigation`` example with the new ``TLineEditV1`` component.
+Reescribimos nuestro ejemplo de ``KeyNavigation`` con el nuevo componente ``TLineEditV1``:
 
 .. code-block:: js
 
@@ -592,20 +591,20 @@ We rewrite our ``KeyNavigation`` example with the new ``TLineEditV1`` component.
 
 .. figure:: assets/textinput3.png
 
-And try the tab key for navigation. You will experience the focus does not change to ``input2``. The simple use of ``focus:true`` is not sufficient. The problem arises, that the focus was transferred to the ``input2`` element the top-level item inside the TlineEditV1 (our Rectangle) received focus and did not forward the focus to the TextInput. To prevent this QML offers the FocusScope.
+Y tratando la llave TAB para navegación. Tu vas a experimentar que el enfoque no cambia a ``input2``. El simple uso de ``focus:true`` no es suficiente. El problema persiste, que el enfoque fue transferido al elemento ``input2``, el elemento de mayor nivel adentro del TLineEditV1 (un rectángulo) recibe el enfoque y no permite el enfoque al TextInput. Para prevenir esto, QML ofrece el ``FocusScope``.
 
-FocusScope
+Alcance de Enfoque
 ----------
 
 .. issues:: ch04
 
-A focus scope declares that the last child element with ``focus:true`` receives the focus if the focus scope receives the focus. So it's forward the focus to the last focus requesting child element. We will create a 2nd version of our TLineEdit component called TLineEditV2 using the focus scope as root element.
+Un alcance de enfoque declara que el ultimo elemento hijo con ``focus:true`` recibe el enfoque, si el alcance de enfoque recibe el enfoque. De esta manera, permite el enfoque  con el ultimo elemento hijo que requirió el enfoque. Vamos a crear una segunda versión de nuestro componente TLineEditV2 usando el alcance de enfoque como elemento base.
 
 .. literalinclude:: src/input/TLineEditV2.qml
     :start-after: M1>>
     :end-before: <<M1
 
-Our example will now look like this:
+Nuestro ejemplo ahora se vera así:
 
 .. code-block:: js
 
@@ -621,21 +620,21 @@ Our example will now look like this:
         }
     }
 
-Pressing the tab key now successfully switches the focus between the 2 components and the correct child element inside the component is focused.
+Presionando la tecla TAB, ahora cambia satisfactoriamente el enfoque entre los 2 componentes, y el elemento hijo correcto adentro del componente esta enfocado.
 
 
-TextEdit
+Editor de Texto
 --------
 
 .. issues:: ch04
 
-The ``TextEdit`` is very similar to ``TextInput`` and support a multi-line text edit field. It doesn't have the text constraint properties as this depends on querying the painted size of the text (``paintedHeight``, ``paintedWidth``). We also create our own component called ``TTextEdit`` to provide a edit background and use the focus scope for better focus forwarding.
+El elemento ``TextEdit`` es muy similar a ``TextInput``, y soporta áreas de texto de múltiples lineas. No tiene las propiedades de restricción de texto, ya que depende del encolamiento del tamaño de pintado del texto (``paintedHeight``, ``paintedWidth``). Nosotros también creamos nuestro propio componente llamado ``TTextEdit`` para entregar un fondo de edición y usar el alcance de enfoque para mejor traslado de enfoque.
 
 .. literalinclude:: src/input/TTextEdit.qml
     :start-after: M1>>
     :end-before: <<M1
 
-You can use it like the ``TLineEdit`` component
+Puedes usarlo como el componente ``TLineEdit``
 
 .. literalinclude:: src/input/TextEditExample.qml
     :start-after: M1>>
@@ -643,12 +642,12 @@ You can use it like the ``TLineEdit`` component
 
 .. figure:: assets/textedit.png
 
-Keys Element
+Elementos Botones
 ------------
 
 .. issues:: ch04
 
-The attached property ``Keys`` allows executing code based on certain key presses. For example to move a square around and scale we can hook into the up, down, left and right keys to translate the element and the plus, minus key to scale the element.
+La propiedad adjunta ``Keys`` permite ejecutar código basado en click de botones específicos. Por ejemplo, para mover un cuadrado y escalarlo, podemos enganchar las llaves arriba, abajo, izquierda y derecha para traducir el elemento y los botones + and - para escalar el elemento.
 
 .. literalinclude:: src/input/KeysExample.qml
     :start-after: M1>>
@@ -657,7 +656,7 @@ The attached property ``Keys`` allows executing code based on certain key presse
 .. figure:: assets/keys.png
 
 
-Advanced Techniques
+Tecnicas Avanzadas
 ===================
 
 .. issues:: ch04
