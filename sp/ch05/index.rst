@@ -44,35 +44,33 @@ Elementos de Animación
 ------------------
 
 .. issues:: ch05
+Hay diferentes tipos de elementos de animación, cada uno optimizado para un caso de uso especifico. Aquí hay una lista de las animaciones mas prominentes:
 
-There are several types of animation elements, each optimized for a specific use case. Here is a list of the most prominent animations:
+* ``PropertyAnimation`` - Anima cambios en valores de propiedades
+* ``NumberAnimation`` - Anima cambios en valores en qreal-type.
+* ``ColorAnimation`` - Anima cambios en valores de color.
+* ``RotationAnimation`` - Anima cambios en valores de rotación.
 
-* ``PropertyAnimation`` - Animates changes in property values
-* ``NumberAnimation`` - Animates changes in qreal-type values
-* ``ColorAnimation`` - Animates changes in color values
-* ``RotationAnimation`` - Animates changes in rotation values
+Aparte que estos son elementos básicos y ampliamente usados, Qt Quick provee también animaciones mas especializadas para casos específicos de uso:
 
+* ``PauseAnimation`` - Provee una pausa  para una animación.
+* ``SequentialAnimation`` - Permite animaciones para ser ejecutadas secuencialmente.
+* ``ParallelAnimation`` - Permite animaciones para ser ejecutadas paralelamente.
+* ``AnchorAnimation`` - Anima cambios en valores de ancla.
+* ``ParentAnimation`` - Anima cambios en valores de padres.
+* ``SmoothedAnimation`` - Permite a una propiedad rastrear suavemente un valor.
+* ``SpringAnimation`` - Permite a una propiedad rastrear un valor en un movimiento de resorte.
+* ``PathAnimation`` - Anima un articulo durante su trayectoria en un camino.
+* ``Vector3dAnimation`` - Anima  cambios en un valor QVector3d.
 
-Besides these basic and widely used animation elements, Qt Quick provides also more specialized animations for specific use cases:
+Vamos a aprender después como crear una secuencia de animaciones. Mientras trabajamos en animaciones mas complejas, viene la necesidad de cambiar una propiedad o ejecutar un script durante una animación que esta ejecutándose. Para esto, Qt Quick ofrece un elemento de acción, cual puede ser usado en todo lugar donde otros elementos de animación pueden ser usados:
 
-* ``PauseAnimation`` - Provides a pause for an animation
-* ``SequentialAnimation`` - Allows animations to be run sequentially
-* ``ParallelAnimation`` - Allows animations to be run in parallel
-* ``AnchorAnimation`` - Animates changes in anchor values
-* ``ParentAnimation`` - Animates changes in parent values
-* ``SmoothedAnimation`` - Allows a property to smoothly track a value
-* ``SpringAnimation`` - Allows a property to track a value in a spring-like motion
-* ``PathAnimation`` - Animates an item along a path
-* ``Vector3dAnimation`` - Animates changes in QVector3d values
+* ``PropertyAction`` - Especifica cambios de propiedades inmediatos durante animaciones.
+* ``ScriptAction`` - Define scripts para ser ejecutados durante una animacion.
 
-We will learn later how to create a sequence of animations. While working on more complex animations there comes up the need to change a property or to run a script during an an ongoing animation. For this Qt Quick offers the action elements, which can be used everywhere where the other animation elements can be used:
+Los tipos de animaciones principales van a ser discutidos durante este capitulo usando ejemplo enfocados y pequeños.
 
-* ``PropertyAction`` - Specifies immediate property changes during animation
-* ``ScriptAction`` - Defines scripts to be run during an animation
-
-The major animation types will be discussed during this chapter using small focused examples.
-
-Applying Animations
+Aplicando Animaciones
 -------------------
 
 .. issues:: ch05
