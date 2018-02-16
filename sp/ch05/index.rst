@@ -75,35 +75,33 @@ Aplicando Animaciones
 
 .. issues:: ch05
 
-Animation can be applied in several ways:
+Animaciones pueden ser aplicados en diferentes maneras:
 
-* *Animation on property* - runs automatically after element is fully loaded
-* *Behavior on property* - runs automatically when the property value changes
-* *Standalone Animation* - runs when animation is explicitly started using ``start()`` or ``running`` is set to true (e.g. by a property binding)
+* *Animaciones en propiedades* - corren automáticamente después de que un elemento ha sido cargado completamente.
+* *Comportamientos en propiedad* - corren automáticamente cuando un valor de propiedad cambia.
+* *Animacion Standalone* - corren cuando una animación es explícitamente iniciado cuando ``start()`` o ``running`` están establecidos como true (ejemplo, por un enlace de propiedad).
 
-*Later we see also how animations can be used inside state transitions.*
+*Después veremos como animaciones pueden ser usados dentro de transacciones de estado*
 
-.. topic:: Extended ClickableImage Version 2
+.. topic:: Version extendida de ClickableImageV2
 
-    To demonstrate the usage of animations we reuse our ``ClickableImage`` component from an earlier chapter and extended it with a text element.
+    Para demostrar el uso de animaciones, re usaremos nuestro componente ``ClickableImage`` del capitulo anterior, y vamos a extenderlo con un elemento de texto.
 
     .. literalinclude:: src/animation/ClickableImageV2.qml
         :start-after: M1>>
         :end-before: <<M1
 
-
-    To organize the element below the image we used a ``Column`` positioner and calculated the width and height based on the column's ``childrenRect`` property. We exposed two properties: ``text`` and the image ``source`` as also the ``clicked`` signal. We also wanted that the text is as wide as the image and it should wrap. We achieve the latter by using the ``Text`` elements ``wrapMode`` property.
+		Para organizar los elementos de abajo de la imagen, usamos un posicionador ``Column`` y calculamos el ancho y alto basado en la propiedad ``childrenRect`` de la columna. Exponemos dos propiedades: ``text`` y el ``source`` de la imagen, como también la señal ``clicked``. También queremos que nuestro texto sea tan ancho como la imagen, y que debería envolver. Esto lo logramos usando la propiedad ``wrapMode`` de los elementos ``Text``
 
     .. note::
 
-        Due to the inversion of the geometry-dependency (parent geometry depends on child geometry) we can't set a width/height on the ``ClickableImageV2``, as this will break our width/height binding. This is a limitation on our internal design and as a designer of components you should be aware of this. Normally you should prefer the child's geometry to depend on the parent's geometry.
+				Debido a que la inversión de las dependencias de geometría (la geometría del padre depende de la geometría de los hijos), no podemos establecer un ancho/largo en ``ClickableImageV2``, debido a que esto romperá nuestro enlace de ancho/alto. Esto es una limitación de nuestro diseño interno, y como un diseñador de componentes, tu deberías estar consciente de esto. Normalmente tu deberías preferir que la geometría del hijo dependa de la geometría del padre.
 
-.. rubric:: The objects ascending.
+.. rubric:: Los objetos se elevan.
 
 .. figure:: assets/animationtypes_start.png
 
-The three objects are all at the same y-position (``y=200``). They need to travel all to ``y=40``. Each of them using a different method with different side-effects and features.
-
+Los tres objetos están en la misma posición y (``y=200``). Ellos necesitan viajar a ``y=40``. Cada uno de ellos usan un método diferente con diferentes rasgos y efectos secundarios.
 
 .. literalinclude:: src/animation/AnimationTypesExample.qml
     :start-after: M1>>
@@ -112,7 +110,7 @@ The three objects are all at the same y-position (``y=200``). They need to trave
 
 .. rubric:: 1st object
 
-The 1st object travels using the ``Animation on <property>`` strategy. The animation starts immediately. When an object is clicked their y-position is reset to the start position, this applies to all objects. On the 1st object the reset does not have any effect as long as the animation is running. It's even disturbing as the y-position is set for a fraction of a second to a new value before the animation starts. *Such competing property changes should be avoided*.
+El primer objeto viaja usando la estrategia de ``Animation on <property>``. La animación empieza inmediatamente. Cuando un objeto es presionado sus posiciones y son reiniciados con la posición de comienzo, esto aplica a todos los objetos. En el primer objeto, el reinicio no tiene ningún efecto mientras la animación se esta ejecutando. Es algo perturbador ya que la posición es establecida en fracciones de segundo a un nuevo valor antes de que la animación empiece * Tales cambios de propiedades deberán ser evitados*
 
 .. literalinclude:: src/animation/AnimationTypesExample.qml
     :start-after: M2>>
@@ -120,7 +118,7 @@ The 1st object travels using the ``Animation on <property>`` strategy. The anima
 
 .. rubric:: 2nd object
 
-The 2nd object travels using a ``behavior on`` animation. This behavior tells the property, every time the property value changes, it changes through this animation. The behavior can be disabled by ``enabled : false`` on the ``Behavior`` element. The object will start traveling when you click it (y-position is then set to 40). Another click has no influence as the position is already set. You could try to use a random value (e.g. ``40+(Math.random()*(205-40)``) for the y-position. You will see that the object will always animate to the new position and adapt its speed to match the 4 seconds to the destination defined by the animations duration.
+El segundo objeto viaja usando la animación ``behaviour on``. Este comportamiento se comunica con la propiedad del objeto, cada vez que hay un cambio en la propiedad, cambia a través de esta animación. El comportamiento  puede ser deshabilitado usando ``enabled: false`` en el elemento ``Behaviour``. El objeto empezara a viajar cuando lo presiones (posición y es entonces puesto en 40). Otro click no tiene efecto en la posición que ya fue establecida. Puedes tratar de usar un valor aleatorio (ejemplo, 40+(Math.random()*(205-40)``) para la posición y. Tu puedes ver que el objeto siempre se anima para la nueva posición y adapta su velocidad para igualar los 4 segundo del destino definido por la duración de la animación.
 
 .. literalinclude:: src/animation/AnimationTypesExample.qml
     :start-after: M3>>
@@ -128,19 +126,18 @@ The 2nd object travels using a ``behavior on`` animation. This behavior tells th
 
 .. rubric:: 3rd object
 
-The 3rd object uses a ``standalone animation``. The animation is defined as its own element and could be everywhere in the document. The click will start the animation using the animations function ``start()``. Each animation has a start(), stop(), resume(), restart() function. The animation itself contains much more information then the other animation types earlier. We need to define the target and properties to declare the target element to be animated and which properties we want to animate. We need to define a ``to`` value and in this case we define also a ``from`` value to allow a re-start of the animation.
+El tercer objeto usa una ``animacion standalone``. La animación es definida como su propio elemento y puede estar en cualquier lugar en el documento. El click va a comenzar cuando la animación use la función de animación ``start()``.Cada animación tiene funciones start(), stop(), resume(), y restart(). La animación en si contiene mucho mas información que las otras animaciones anteriores. Nosotros necesitamos definir el objetivo y propiedades a declarar en el elemento objetivo para ser animado, y que elementos queremos animar. Necesitamos definir un valor ``to`` y en este caso definimos también un valor ``from`` para permitir reiniciar la animación.
 
 .. figure:: assets/animationtypes.png
 
-A click on the background will reset all objects to their initial position. The 1st object can't be restarted except by re-starting the program which triggers the re-loading of the element.
+Un click en el fondo reiniciara todos los objetos a su posición inicial. El primer objeto no puede ser reiniciado sin tener que reiniciar el programa, cual dispara la recarga de los elementos.
 
 .. note::
-
-    Another way to start/stop an animation is to bind a property to the ``running`` property of an animation. This is especially useful when the user-input is in control of properties::
+		Otra manera de iniciar/detener una animación es enlazando una propiedad con la propiedad ``running`` de la animación. Esto es especialmente importante cuando la entrada de usuario es en el control de propiedades::
 
         NumberAnimation {
             ...
-            // animation runs when mouse is pressed
+            // Animacion inicia cuando se presiona el raton
             running: area.pressed
         }
         MouseArea {
