@@ -146,37 +146,35 @@ Un click en el fondo reiniciara todos los objetos a su posición inicial. El pri
 
 
 
-Easing Curves
+Curvas de Aceleracion
 -------------
 
 .. issues:: ch05
 
-The value change of a property can be controlled by an animation. Easing attributes allows influencing the interpolation curve of a property change. All animations we have defined by now use a linear interpolation because the initial easing type of an animation is ``Easing.Linear``. It's best visualized with a small plot, where the y-axis is the property to be animated and the x-axis is the time (*duration*). A linear interpolation would draw a straight line from the ``from`` value at the start of the animation to the ``to`` value at the end of the animation. So the easing type defines the curve of change. Easing types are carefully chosen to support a natural fit for a moving object, for example when a page slides out. Initially the page should slide out slowly and then gaining the speed to finally slide out on high speed, similar to turning the page of a book.
+El valor de los cambios de propiedades puede ser controlado por una animación. Atributos de aceleración permiten influir en la curva de interpolación de un cambio de propiedad. Todas animaciones que hemos definido por ahora usan un interpolacion lineal porque el tipo de aceleración inicial de una animación es ``Easing.linear``. Es mejor visualizado con un pequeño grafico, donde el eje y es la propiedad para animar y el eje x es el tiempo (*duration*). Una interpolación lineal puede ser dibujado con una linea recta desde el valor del inicio de la animación``from`` al valor de la final de la animación ``to`. Entonces el tipo de aceleración define la curva de cambio. Tipos de aceleración son cuidadosamente escogidos para soportar un ajuste natural para un objeto móvil, por ejemplo, cuando una pagina se desliza hacia afuera, inicialmente la pagina  deberá deslizarse lentamente y luego ganando velocidad para al final salir a la mayor velocidad, similar a hojear una pagina de un libro.
 
 .. note::
-
-    Animations should not be overused. As other aspects of UI design also animations should be designed carefully and support the UI flow and not dominate it. The eye is very sensitive to moving objects and animations can easily distract the user.
-
-In the next example we will try some easing curves. Each easing curve is displayed by a click-able image and, when clicked, will set a new easing type on the ``square`` animation and then trigger a ``restart()`` to run the animation with the new curve.
+		Animaciones no deberán ser sobre usados. Como otro aspecto de disenso de UI, las animaciones deberán ser diseñados cuidadosamente y soportar el flujo de UI y no dominarlo. El ojo es muy sensible en objetos móviles, y animaciones pueden fácilmente distraer el usuario.
+		
+En el siguiente ejemplo, vamos a probar algunas curvas de aceleración. Cada curva de aceleración es mostrado por una imagen clickeable y, cuando es presionado, va a establecer un nuevo tipo de aceleración en la animación ``square``, entonces disparando un ``restart()`` para correr la animación con la nueva curva.
 
 .. figure:: assets/automatic/easingcurves.png
     :scale: 50%
 
-The code for this example was made a little bit more complicated.We first create a grid of ``EasingTypes`` and a ``Box`` which is controlled by the easing types. A easing type just displays the curve which the box shall use for its animation. When the user clicks on an easing curve the box moves in a direction according to the easing curve. The animation itself is a standalone-animation with the target set to the box and configured for x-property animation with a duration of 2 secs.
+El código de este ejemplo fue hecho un poco mas complicado. Primero creamos una cuadricula de ``EasingTypes``, y un ``Box`` cual es controlado con los tipos de aceleración. Un tipo de aceleración solo muestra la curva en la que la caja deberá usar su animación. Cuando el usuario presiona en una curva de aceleración, la caja se mueve en una dirección acordada en la curva de aceleración. La animación en si es una animación standalone con un establecimiento de objetivo de la caja y configurada con animaciones en la propiedad x con una duración de 2 segundos.
 
-.. note:: The internals of the EasingType renders the curve in real time and the interested reader can look it up in the ``EasingCurves`` example.
+.. note:: Las partes internas de EasingType renderizan la curva en tiempo real, y si el lector esta interesado, puede ver como funciona con el ejemplo de ``EasingCurves``
 
 .. literalinclude:: src/EasingCurves/EasingCurves.qml
     :start-after: M1>>
     :end-before: <<M1
 
-A you play with it, please observe the change of speed during an animation. Some animations feel more natural for the object and some feel irritating.
+Como tu juegas con el ejemplo, observa los cambios de velocidad durante la animación. Algunas animaciones se sienten naturales para el objeto y otros se sienten irritantes.
 
-Besides the ``duration`` and ``easing.type`` you are able to fine tune animations. For example the general ``PropertyAnimation`` where most animation inherit from additionally supports an ``easing.amplitude``, ``easing.overshoot`` and ``easing.period`` property which allows you to fine-tune the behavior of particular easing curves. Not all easing curves support these parameters. Please consult the :qt5r:`easing table <qml-qtquick-propertyanimation.html#easing-prop>` from the ``PropertyAnimation`` documentation to check if an easing parameter has influence on an easing curve.
+Aparte de ``duration`` y ``easing.type``, tu puedes afinar las animaciones. Por ejemplo, ``PropertyAnimation``, donde la mayoría de animaciones heredan para soportar propiedades adicionales como ``easing.amplitude``, ``easing.overshoot``, y ``easing.period``;que te permiten afinar el comportamiento de una curva de aceleración particular. No todas las curvas de aceleración soportan estos parámetros. Consulta el :qt5r:`easing table <qml-qtquick-propertyanimation.html#easing-prop>` desde la documentación de ``PropertyAnimation`` para observar si el parámetro de aceleración tiene influencia en una curva de aceleración.
 
 .. note::
-
-    Choosing the right animation for the element in the user interface context is crucial for the outcome. Remember the animation shall support the UI flow; not irritate the user.
+		Escogiendo la animación correcta para un elemento en un contexto de interfaz de usuario es crucial para el una buena aceptación. Recuerda de las animaciones deben de soportar el flujo de UI; no irritar al usuario.
 
 Grouped Animations
 ------------------
