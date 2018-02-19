@@ -60,7 +60,7 @@ Aparte que estos son elementos básicos y ampliamente usados, Qt Quick provee ta
 * ``ParentAnimation`` - Anima cambios en valores de padres.
 * ``SmoothedAnimation`` - Permite a una propiedad rastrear suavemente un valor.
 * ``SpringAnimation`` - Permite a una propiedad rastrear un valor en un movimiento de resorte.
-* ``PathAnimation`` - Anima un articulo durante su trayectoria en un camino.
+* ``PathAnimation`` - Anima un artículo durante su trayectoria en un camino.
 * ``Vector3dAnimation`` - Anima  cambios en un valor QVector3d.
 
 Vamos a aprender después como crear una secuencia de animaciones. Mientras trabajamos en animaciones mas complejas, viene la necesidad de cambiar una propiedad o ejecutar un script durante una animación que esta ejecutándose. Para esto, Qt Quick ofrece un elemento de acción, cual puede ser usado en todo lugar donde otros elementos de animación pueden ser usados:
@@ -176,16 +176,16 @@ Aparte de ``duration`` y ``easing.type``, tu puedes afinar las animaciones. Por 
 .. note::
 		Escogiendo la animación correcta para un elemento en un contexto de interfaz de usuario es crucial para el una buena aceptación. Recuerda de las animaciones deben de soportar el flujo de UI; no irritar al usuario.
 
-Grouped Animations
+Animaciones Agrupadas
 ------------------
 
 .. issues:: ch05
 
-Often animations will be more complex then just animating one property. You might want to run several animations at the same time or one after another or even execute a script between two animations. For this, the grouped animation offer you a possibility. As the named suggests it's possible to group animations. Grouping can be done in two ways: parallel or sequential. You can use the ``SequentialAnimation`` or the ``ParallelAnimation`` element, which act as animation containers for other animation elements. These grouped animations are animations themselves and can be used exactly as such.
+Normalmente, animaciones son mas complejos que solo animar una sola propiedad. Tu puedes querer ejecutar varias animaciones en el mismo tiempo o uno después de otro, o inclusive ejecutar un guion  entre dos animaciones. Para esto, la animación agrupada te ofrece esas posibilidades. Como el nombre indica, es posible agrupar animaciones. Agrupacion puede ser hecho en dos maneras: paralelamente o secuencialmente. Puedes usar los elementos ``SequentialAnimation`` o ``ParallelAnimation``, cuales actúan como contenedores de animaciones para otros elementos de animación. Este grupo de animación son animaciones por si mismos, y pueden ser usados exactamente así.
 
 .. figure:: assets/groupedanimation.png
 
-All direct child animations of a parallel animation will run in parallel, when started. This allows you to animate different properties at the same time.
+Toda animación hija directa de una animación paralela puede correr en paralelo, cuando comienza el contenedor. Esto permite animar diferentes propiedades al mismo tiempo..
 
 .. literalinclude:: src/animation/ParallelAnimationExample.qml
     :start-after: M1>>
@@ -193,7 +193,7 @@ All direct child animations of a parallel animation will run in parallel, when s
 
 .. figure:: assets/parallelanimation_sequence.png
 
-A sequential animation will first run the first child animation and then continue from there.
+Una animacion secuencial primero correra el primer animacion hijo, y despues continuara con los demas en ese orden.
 
 .. literalinclude:: src/animation/SequentialAnimationExample.qml
     :start-after: M1>>
@@ -201,21 +201,19 @@ A sequential animation will first run the first child animation and then continu
 
 .. figure:: assets/sequentialanimation_sequence.png
 
-Grouped animation can also be nested, for example a sequential animation can have two parallel animations as child animations, and so on. We can visualize this with a soccer ball example. The idea is to throw a ball from left to right an animate its behavior.
+Animaciones agrupadas pueden ser también anidados, por ejemplo una animación secuencial puede tener dos animaciones paralelas como animaciones hijas, y así. Podemos visualizar esto con un ejemplo de un balón de futbol. La idea es aventar el balón de izquierda a derecha y animar su comportamiento.
 
 .. figure:: assets/soccer_init.png
 
-To understand the animation we need to dissect it into the integral transformations of the object. We need to remember animation do animate property changes. Here are the different transformations:
+* Una traslación en x de izquierda a derecha (``X1``)
+* Una traslación de y de abajo para arriba (``Y1``) seguido por una traslación de arriba para abajo (``Y2``) con cierto rebote.
+* Una rotación en 360 grados durante toda la duración de la animación (``ROT1``)
 
-* An x-translation from left-to-right (``X1``)
-* An y-translation from down to up (``Y1``) followed by a translation from up to down (``Y2``) with some bouncing
-* A rotation over 360 over the whole animation duration (``ROT1``)
-
-The whole duration of the animation should take three seconds.
+La duración completa de la animación deberá durar 3 segundos.
 
 .. figure:: assets/soccer_plan.png
 
-We start with an empty item as root element of the width of 480 and height of 300.
+Podemos empezar con un artículo vació como elemento base de ancho de 480 y alto de 300.
 
 .. code-block:: js
 
@@ -230,9 +228,9 @@ We start with an empty item as root element of the width of 480 and height of 30
         ...
     }
 
-We have defined our total animation duration as reference to better synchronize the animation parts.
+Hemos definido una duración total de animación como referencia para mejor sincronización de las partes de la animación.
 
-The next step would be to add the background, which in our case are 2 rectangles with a green and blue gradients.
+El siguiente paso es agregar el fondo, cual en este caso serán 2 rectángulos con gradientes verdes y azules.
 
 .. literalinclude:: src/animation/BouncingBallExample.qml
     :start-after: M1>>
@@ -240,9 +238,7 @@ The next step would be to add the background, which in our case are 2 rectangles
 
 .. figure:: assets/soccer_stage1.png
 
-The upper blue rectangle takes 200 pixel of the height and the lower one is anchored to the top on the sky and to the bottom on the root element.
-
-Let's bring the soccer ball onto the green. The ball is an image, stored under "assets/soccer_ball.png". For the beginning we would like to position it in the lower left corner, near the edge.
+El rectangulo superior azul toma 200 pixeles del alto y el rectangulo de abajo esta anclado de arriba por el cielo y Hay que traer el balón de futbol en la parte verde. El balón es una imagen, guardada dentro de "assets/soccer_ball.png". Para el inicio, nosotros queremos posicionarlo en la esquina de izquierda-abajo, cerca del limite.
 
 .. literalinclude:: src/animation/BouncingBallExample.qml
     :start-after: M2>>
@@ -250,9 +246,9 @@ Let's bring the soccer ball onto the green. The ball is an image, stored under "
 
 .. figure:: assets/soccer_stage2.png
 
-The image has a mouse area attached to it. If the ball is clicked the position of the ball will reset and the animation restarted.
+La imagen tiene una área de ratón agregada a el. Si el balón es presionado, la posición del balón sera reiniciado, y la animación se reiniciara.
 
-Let's start with an sequential animation for the two y translations first.
+Vamos a comenzar con la animación secuencial para las primeras 2 traslaciones.
 
 .. code-block:: js
 
@@ -274,10 +270,9 @@ Let's start with an sequential animation for the two y translations first.
 
 .. figure:: assets/soccer_stage3.png
 
-This specifies that 40% of the total animation duration is the up animation and 60% the down animation. One animation after another as a sequence. The transformations are animated on a linear path but there is no curve currently. Curves will be added later using the easing curves, at the moment we're concentrating on getting the transformations animated.
+Esto especifica que 40% de la duración total de la animación es en la parte de arriba y el 60% estará abajo. Una animación después de otra como secuencia. Las transformaciones son animadas en una ruta lineal, pero no todavía no hay curvas. Curvas son añadidas después cuando usemos curvas de aceleración, por el momento nos concentraremos en tener las transformaciones animadas..
 
-
-Next, we need to add the x-translation. The x-translation shall run in parallel with the y-translation so we need to encapsulate the sequence of y-translations into a parallel animation together with the x-translation.
+Después, necesitamos agregar la traslación en x. La traslación en x deberá correr en paralelo con la traslación en y, pues necesitamos encapsular la secuencias de traslaciones en y dentro de una animación en paralelo con la traslación en x.
 
 .. code-block:: js
 
@@ -296,7 +291,7 @@ Next, we need to add the x-translation. The x-translation shall run in parallel 
 
 .. figure:: assets/soccer_stage4.png
 
-At the end we would like the ball to be rotating. For this we need to add another animation to the parallel animation. We choose the ``RotationAnimation`` as it's specialized for rotation.
+En el final, queremos un balón que rote. Para hacer esto, necesitamos agregar otra animación en la animación paralelos. Escogemos la ``RotationAnimation`` ya que esta especializada en rotaciones.
 
 .. code-block:: js
 
@@ -316,29 +311,32 @@ At the end we would like the ball to be rotating. For this we need to add anothe
         }
     }
 
-That's the whole animation sequence. The one thing left is to provide the correct easing curves for the movements of the ball. For the *Y1* animation I use a ``Easing.OutCirc`` curve as this should look more like a circular movement. *Y2* is enhanced using an ``Easing.OutBounce`` as the ball should bounce and the bouncing should happen at the end (try an ``Easing.InBounce`` and you see the bouncing will start right away).
-The *X1* and *ROT1* animation are left as is with a linear curve.
+Este es la completa secuencia de animaciones. La faltante es proveer unas curvas de aceleración correctas para los movimientos del balón. Para la animación *Y1* usamos la curva ``Easing.OutCirc`` como deberá verse como un movimiento circular. *Y2* es mejorado usando ``Easing.OutBounce`` ya que el balón deberá rebotar y el rebote deberá pasar al final (trata un ``Easing.InBounce`` y veras que el rebote empezara al final).
 
-Here is the final animation code for your reference:
+Las animaciones *X1* y *ROT1* llevan curva lineal.
+
+Aquí esta el código de la animación final como tu referencia.
 
 .. literalinclude:: src/animation/BouncingBallExample.qml
     :start-after: M3>>
     :end-before: <<M3
 
 
-States and Transitions
+Transaciones y Estados
 ======================
 
 .. issues:: ch05
 
-Often parts of a user interface can be described in states. A state defines a set of property changes and can be triggered by a certain condition. Additional these state switches can have a transition attached which defines how these changes should be animated or any additional actions shall be applied. Actions can also be applied when a state is entered.
+Partes normales de un interfaz de usuario pueden ser descritos como estados. Un estado define un conjunto de cambios de propiedades y puede ser disparado por cierta condición. Adicionalmente, estos cambios de estados pueden tener una transacción añadida, cual define como estos cambios deberán ser animados o cualquier otra acción adicional que deberá ser aplicada. Acciones pueden ser aplicada cuando un estado entra.
 
-States
+Estados
 ------
 
 .. issues:: ch05
 
-You define states in QML with the ``State`` element, which needs to be bound to the ``states`` array of any item element. A state is identified through a state name and consist, in its simplest form, of a series of property changes on elements. The default state is defined by the initial properties of the element and is named ``""`` (the empty string).
+To defines estados en QML con el elemento ``State`, que necesida ser conectado con el arreglo de ``states`` de un artículo. Un estado es identificado a travez de un nombre de estado, y consiste en su forma mas simple, en una serie de cambios de propiedades en elementos. El estado por defento es definido por las propiedades iniciales de un elemento y es llamado ``""`` (una cadena vacia).
+
+Para definir estados en QML con el elemento ``State`, que necesita ser conectado con el arreglo de ``states`` de un artículo. Un estado es identificado a través de un nombre de estado, y consiste en su forma mas simple, en una serie de cambios de propiedades en elementos. El estado por defecto es definido por las propiedades iniciales de un elemento y es llamado ``""`` (una cadena vaciá).
 
 .. code-block:: js
 
@@ -356,11 +354,11 @@ You define states in QML with the ``State`` element, which needs to be bound to 
         ]
     }
 
-A state is changed by assigning a new state name to the ``state`` property of the element with the states defined.
+Un estado es cambiado asignando un nuevo nombre de estado en la propiedad ``state`` del elemento en la que los estados están definidos.
 
 .. note::
 
-    Another way to switch states is using the ``when`` property of the ``State`` element. The ``when`` property can be set to an expression that evaluates to true when the state should be applied.
+		Otra forma de cambiar estados es usando la propiedad ``when`` en el elemento ``State``. La propiedad ``when`` puede ser establecido como una expresión que evaluá la verdad cuando el estado deberá ser aplicado.
 
 .. code-block:: js
 
@@ -379,31 +377,31 @@ A state is changed by assigning a new state name to the ``state`` property of th
 
 .. figure:: assets/trafficlight_sketch.png
 
-For example, a traffic light might have two signaling lights. The upper one signaling stop with a red color and the lower one signaling go with a green color. In this example both lights should not shine at the same time. Let's have a look at the state chart diagram.
+Por ejemplo, un semáforo puede tener dos luces de señal. El de arriba señala parar con un color rojo, y el de abajo señala un seguir como un color verde. En este ejemplo, las dos luces no deberán de encender al mismo tiempo. Entonces veamos el diagrama de estados.
 
 .. figure:: assets/trafficlight_states.png
 
-When the system is switched on it goes automatically into the stop mode as default state. The stop state changes the ``light1`` to red and ``light2`` to black (off). An external event can now trigger a state switch to the ``"go"`` state. In the go state we change the color properties from ``light1`` to black (off) and ``light2`` to green to indicate the passers may walk now.
+Cuando el sistema cambia, va automáticamente dentro del modo de parar como  un estado por defecto. El estado parar cambia el ``light1`` a rojo y ``light2`` a negro (apagado). Un evento externo puede disparar el cambio de estado en el estado ``”go”``. En este estado, cambiamos la propiedad de color de ``light`` a negro (off) y ``light2`` a verde que indica que los transeúntes pueden caminar.
 
-To realize this scenario we start sketching our user interface for the 2 lights. For simplicity we use 2 rectangles with the radius set to the half of the width (and the width is the same as the height, which means it's a square).
+Para realizar este escenario, empezaremos diseñando nuestra interfaz de usuario de las 2 luces. Para simplificar, usaremos 2 rectángulos con el radio establecido a la mitad del ancho (y el ancho es el mismo que la altura, que indica que es un cuadrado.
 
 .. literalinclude:: src/animation/StatesExample.qml
     :start-after: M1>>
     :end-before: <<M1
 
-As defined in the state chart we want to have two states one the ``"go"`` state and the other the ``"stop"`` state, where each of them changes the traffic lights respective to red or green. We set the ``state`` property to ``stop`` to ensure the initial state of our traffic light is the ``stop`` state.
+Como esta definido en el grafo de estados, queremos tener dos estados, el estado ``”go”`` y el otro estado ``”stop”``, donde cada uno de ellos cambian el semáforo respectivamente a rojo o verde. Establecemos la propiedad ``state`` a ``stop`` para asegurar que el estado inicial de nuestro semáforo es el estado ``stop``.
 
 .. note::
 
-    We could have achieved the same effect with only a ``"go"`` state and no explicit ``"stop"`` state by setting the color of ``light1`` to red and the color of ``light2`` to black. The initial state ``""`` defined by the initial property values would then act as the ``"stop"`` state.
+		Pudimos haber obtenido el mismo efecto con solo un estado ``”go”`` y no explícitamente el estado ``”stop”`` estableciendo el color de ``light1`` a rojo y el color de ``light2`` a negro. El estado inicial ``””`` definido por los valores de las propiedades iniciales podría entonces actuar como el estado ``”stop”``.
 
 .. literalinclude:: src/animation/StatesExample.qml
     :start-after: M2>>
     :end-before: <<M2
 
-Using ``PropertyChanges { target: light2; color: "black" }`` is not really required in this examples as the initial color of ``light2`` is already black. In a state it's only necessary to describe how the properties shall change from their default state (and not from the previous state).
+Usando ``PropertyChanges {target: light2; color: “black”}`` no es realmente necesario en este ejemplo ya que el color inicial de ``light2`` es negro. En un estado, solamente es necesario describir como las propiedades deberán de cambiar desde su estado por defecto (y no desde su estado anterior).
 
-A state change is triggered using a mouse area which covers the whole traffic light and toggles between the go and stop state when clicked.
+Un cambio de estado es disparado usando el área de ratón, cual cubre todo el semáforo y alterna entre los estados siga y pare cuando es presionado.
 
 .. literalinclude:: src/animation/StatesExample.qml
     :start-after: M3>>
@@ -411,13 +409,13 @@ A state change is triggered using a mouse area which covers the whole traffic li
 
 .. figure:: assets/trafficlight_ui.png
 
-We are now able to successfully change the state of the traffic lamp. To make the UI more appealing and look natural we should add some transitions with animation effects. A transition can be triggered by a state change.
+Ahora podemos cambiar satisfactoriamente el estado del semáforo. Para hacer el UI mas atractivo y natural, deberíamos agregar algunas transacciones con efectos de animación. Una transición que puede ser disparada por un cambio de estado.
 
 .. note::
 
-    It's possible to create a similar logic using scripting instead of QML states. Developers can easily fall into the trap of writing more a JavaScript program than a QML program.
+			Es posible el crear una lógica similar usando scripting en vez de estados QML. Desarrolladores pueden fácilmente caer dentro de la trampa de escribir mas programas JavaScript que programas QML.
 
-Transitions
+Transiciones
 -----------
 
 .. issues:: ch05
