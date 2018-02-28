@@ -2,7 +2,7 @@
 Qt and C++
 ==========
 
-.. sectionauthor:: `jryannel <https://github.com/jryannel>`_
+.. sectionauthor:: `jryannel <https://github.com/jryannel>`_, `Carlos Hernandez <https://github.com/CharlieGearsTech>`_
 
 .. issues:: ch15
 
@@ -91,9 +91,9 @@ El QObject
 
 .. issues:: ch15
 
-As described in the introduction, the ``QObject`` is what enables Qt's introspection. It is the base class of almost all classes in Qt. Exceptions are value types such as ``QColor``, ``QString`` and ``QList``.
+Como fue descrito en la introducción, el ``QObject`` es lo que permite la introspección de Qt. Es la clase base de casi toda clase en Qt. Excepciones son tipos de valores como ``QColor``, ``QString``, y ``QList``.
 
-A Qt object is a standard C++ object, but with more abilities. These can be divided into two groups: introspection and memory management. The first means that a Qt object is aware of its class name, its relationship to other classes, as well as its methods and properties. The memory management concept means that each Qt object can be the parent of child objects. The parent *owns* the children, and when the parent is destroyed, it is responsible for destroying its children.
+Un objeto Qt es un objeto estándar de C++, pero con mas habilidades. Estos pueden ser divididos dentro de 2 grupos: introspección y manejo de memoria. El primero significa que un objeto Qt esta consciente de su nombre de clase, su relación con otras clases, como también sus métodos y propiedades. El concepto de manejo de memoria significa que cada objeto Qt puede ser padre de objetos hijos. El padre *tiene* a los hijos, y cuando el padre es destruido, es responsable de destruir sus hijos.
 
 The best way of understanding how the ``QObject`` abilities affect a class is to take a standard C++ class and Qt enable it. The class shown below represents an ordinary such class.
 

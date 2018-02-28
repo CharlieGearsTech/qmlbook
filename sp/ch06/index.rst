@@ -2,7 +2,7 @@
 Model-View-Delegate
 ===================
 
-.. sectionauthor:: `e8johan <https://bitbucket.org/e8johan>`_
+.. sectionauthor:: `e8johan <https://bitbucket.org/e8johan>`_, `Carlos Hernandez <https://github.com/CharlieGearsTech>`_
 
 .. index:: GridView, ListElement, ListModel, ListView, PathView, Repeater, XmlListModel
 

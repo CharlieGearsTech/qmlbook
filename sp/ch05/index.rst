@@ -2,7 +2,7 @@
 Elementos Fluidos
 ==============
 
-.. sectionauthor:: `jryannel <https://github.com/jryannel>`_
+.. sectionauthor:: `jryannel <https://github.com/jryannel>`_, `Carlos Hernandez <https://github.com/CharlieGearsTech>`_
 
 .. index:: Animations, Easing Curves, Grouped Animations, States, Transitions, SequentialAnimation, ParallelAnimation, ColorAnimation, NumberAnimation, Transition, ClickableImage, Bouncing Ball
 
