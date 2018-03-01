@@ -95,25 +95,25 @@ Como fue descrito en la introducción, el ``QObject`` es lo que permite la intro
 
 Un objeto Qt es un objeto estándar de C++, pero con mas habilidades. Estos pueden ser divididos dentro de 2 grupos: introspección y manejo de memoria. El primero significa que un objeto Qt esta consciente de su nombre de clase, su relación con otras clases, como también sus métodos y propiedades. El concepto de manejo de memoria significa que cada objeto Qt puede ser padre de objetos hijos. El padre *tiene* a los hijos, y cuando el padre es destruido, es responsable de destruir sus hijos.
 
-The best way of understanding how the ``QObject`` abilities affect a class is to take a standard C++ class and Qt enable it. The class shown below represents an ordinary such class.
+La mejor manera de entender como las habilidades de ``QObject`` afectan a una clase es tomando una clase de C++ estándar y activarlo con Qt. La clase que se muestra abajo representa una clase ordinaria de ese tipo.
 
-The person class is a data class with a name and gender properties. The person class uses Qt's object system to add meta information to the c++ class. It allows users of a person object to connect to the slots and get notified when the properties get changed.
+La clase persona es una clase de datos con un nombre y unas propiedades de genero. La clase persona usa el sistema de objetos de Qt para agregar meta-información  para la clase de C++. Esto permite usuarios de un objeto persona conectar con huecos y ser notificados cuando las propiedades hayan cambiado.
 
 .. code-block:: cpp
 
     class Person : public QObject
     {
-        Q_OBJECT // enabled meta object abilities
+        Q_OBJECT // permite meta-objetos
 
-        // property declarations required for QML
+        // Declaraciones de propiedades para QML
         Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)
         Q_PROPERTY(Gender gender READ gender WRITE setGender NOTIFY genderChanged)
 
-        // enables enum introspections
+        // Permite introspeccion de Enums
         Q_ENUMS(Gender)
 
     public:
-        // standard Qt constructor with parent for memory management
+        // Constructor de Qt estandar con un padre para manejo de memoria.
         Person(QObject *parent = 0);
 
         enum Gender { Unknown, Male, Female, Other };
@@ -121,22 +121,22 @@ The person class is a data class with a name and gender properties. The person c
         QString name() const;
         Gender gender() const;
 
-    public slots: // slots can be connected to signals
+    public slots: // huecos que se conectan a señales
         void setName(const QString &);
         void setGender(Gender);
 
-    signals: // signals can be emitted
+    signals: // señales que pueden ser emitidos
         void nameChanged(const QString &name);
         void genderChanged(Gender gender);
 
     private:
-        // data members
+        // Miembros de datos.
         QString m_name;
         Gender m_gender;
     };
 
 
-The constructor passes the parent to the super class and initialize the members. Qt's value classes are automatically initialized. In this case ``QString`` will initialize to a null string (``QString::isNull()``) and the gender member will explicitly initialize to the unknown gender.
+El constructor pasa al padre a la súper clase e inicializa los miembros. Las clases de valores de Qt son automáticamente inicializados. En este caso ``Qstring`` va a inicializarse con una cadena nula (``Qstring::isNull()``) y el miembro de genero va a ser explícitamente inicializado para un genero desconocido.
 
 .. code-block:: cpp
 
@@ -146,7 +146,7 @@ The constructor passes the parent to the super class and initialize the members.
     {
     }
 
-The getter function is named after the property and is normally a simple ``const`` function. The setter emits the changed signal when the property really has changed. For this we insert a guard to compare the current value with the new value. And only when the value differs we assign it to the member variable and emit the changed signal.
+La función de recepción es llamado después de la propiedad y es normalmente una función constante (``const``). Los transmisores emiten la señal de cambio cuando la propiedad realmente ha sido cambiado. Para esto, podemos insertar un guardián para comparar el valor actual con un nuevo valor. Y solo cuando el valor difiere, nosotros le asignamos para la variable miembro y emitimos la señal de cambio.
 
 .. code-block:: cpp
 
@@ -164,7 +164,8 @@ The getter function is named after the property and is normally a simple ``const
         }
     }
 
-Having a class derived from ``QObject``, we have gained more meta object abilities we can explore using the ``metaObject()`` method. For example retrieving the class name from the object.
+
+Teniendo una clase derivada de ``QObject``, hemos ganado mas habilidades de meta-objetos que podemos explorar usando el método ``metaObject()``. Por ejemplo, mostrando el nombre de la clase desde el objeto.
 
 .. code-block:: cpp
 
@@ -172,44 +173,43 @@ Having a class derived from ``QObject``, we have gained more meta object abiliti
     person->metaObject()->className(); // "Person"
     Person::staticMetaObject.className(); // "Person"
 
-There are many more features which can be accessed by the ``QObject`` base class and the meta object. Please check out the ``QMetaObject`` documentation.
 
+Aquí hay mas rasgos que pueden ser accesados por la clase base ``QObject`` y el meta-objeto. Por favor, revisa la documentación de `QMetaObject``.
 
-Build Systems
+Sistemas de Construcción
 =============
 
 .. issues:: ch15
 
-Building software reliably on different platforms can be a complex task. You will encounter different environments with different compilers, paths, and library variations. The purpose of Qt is to shield the application developer from these cross platform issues. For this Qt introduced the ``qmake`` build file generator. ``qmake`` operates on a project file with the ending ``.pro``. This project file contains instructions about the application and the sources to be used. Running qmake on this project file will generate a ``Makefile`` for you on unix and mac and even under windows if the mingw compiler toolchain is being used. Otherwise it may create a visual studio project or an xcode project.
+Construyendo software confiable en diferentes plataformas puede ser un trabajo complejo. Puedes encontrarte con diferentes ambientes con diferentes compiladores, direcciones, y variaciones de librería. El propósito de Qt es de proteger el desarrollador de aplicaciones de estos problemas de multi-plataforma. Para esto, Qt introduce el generador de archivos de construcción ``qmake``. ``qmake`` opera en un archivo de proyecto( con terminación ``.pro``). Este archivo de proyecto contiene instrucciones acerca de la aplicación y las fuentes que pueden ser usados. Ejecutando ``qmake`` en este archivo de proyecto va a generar un ``MakeFile`` para ti en Unix, Mac e inclusive en Windows (si tiene usando  el conjunto de herramientas con compilador mingw). De otra forma, puede crear un proyecto de visual studio o un proyecto de XCode.
 
-A typical build flow in Qt under unix would be::
-
-    $ edit myproject.pro
-    $ qmake // generates Makefile
+Un flujo de construcción típica en Qt en Unix puede ser:
+    $ editar myproject.pro
+    $ qmake // Genera Makefile
     $ make
 
-Qt allows you also to use shadow builds. A shadow build is a build outside of your source code location. Assume we have a myproject folder with a ``myproject.pro`` file. The flow would be like this::
+Qt te permite también usar construcciones sombras. Una construcción sombra es una construcción afuera de tu zona de código fuente. Asume que tenemos una carpeta myproject con un archivo ``myproject.pro``. EL flujo puede ser como este:
 
     $ mkdir build
     $ cd build
     $ qmake ../myproject/myproject.pro
 
-We create a build folder and then call qmake from inside the build folder with the location of our project folder. This will setup the make file in a way that all build artifacts are stored under the build folder instead of inside our source code folder. This allows us to create builds for different qt versions and build configurations at the same time and also it does not clutter our soruce code folder which is always a good thing.
+Nosotros creamos una carpeta de construcción y entonces llamamos qmake desde afuera de la carpeta de construcción con la localización de nuestra carpeta del proyecto. Con esto, configuramos el archivo make en una manera que todo artefacto de construcción es guardado dentro de una carpeta de construcción en vez de adentro de la carpeta del código fuente. Esto nos permite crear construcciones de diferentes versiones de Qt y configuraciones de construcción en el mismo tiempo, y ademas  no amontona nuestra carpeta de código fuente, que siempre es algo bueno.
 
-When you are using Qt Creator it does these things behind the scenes for you and you do not have to worry about these steps usually. For larger projects and for adeeper understanding of the flow, it is recommended that you learn to build your qt project from the command line.
+Cuando estamos usando Qt Creator, este IDE hace las cosas atrás de las escenas para que no te tengas que preocupar por estos pasos usuales. Para proyectos grandes y para un mayor entendimiento del flujo, es recomendado que aprendas como construir tus propios proyectos de Qt desde la linea de comandos.
 
 QMake
 -----
 
 .. issues:: ch15
 
-QMake is the tool which reads your project file and generates the build file. A project file is a simplified write down of your project configuration, external dependencies, and your source files. The simplest project file is probably this::
+Qmake es una herramienta que lee tu archivo de proyecto y genera un archivo de construcción. Un archivo de proyecto es una escritura simplificada de las configuraciones de tu proyecto, dependencias externas y tus archivos fuentes. El archivo mas simple puede ser probablemente esto::
 
     // myproject.pro
 
     SOURCES += main.cpp
 
-Here we build an exectuable application which will have the name ``myproject`` based on the project file name. The build will only contain the ``main.cpp`` source file. And by default we will use the QtCore and QtGui module for this project. If our project were a QML application we would need to add the QtQuick and QtQml module to the list::
+Aquí construimos una aplicación ejecutable que va a tener el nombre de ``myproject`` basado en el nombre del archivo de proyecto. La construcción solo contiene el código fuente de ``main.cpp`` Y por defecto, vamos a usar los módulos QtCore y QtGui para este proyecto. Si nuestro proyecto es una aplicación QML, necesitaremos agregar los módulos QtQuick y QtQml en la lista::
 
     // myproject.pro
 
@@ -217,7 +217,7 @@ Here we build an exectuable application which will have the name ``myproject`` b
 
     SOURCES += main.cpp
 
-Now the build file knows to link against the QtQml and QtQuick Qt modules. QMake use the concept of ``=``, ``+=`` and ``-=`` to assign, add, remove elements from a list of options, respectively. For a pure console build without UI dependencies you would remove the QtGui module::
+Ahora nuestro archivo de construcción conoce el enlace para los módulos QtQml y QtQuick. Qmake usa el concepto de ``=``, ``+=`` y ``-=`` para asignar, agregar y remover elementos de la lista de opciones, respectivamente. Para una construcción pura de consola sin dependencias de interfaz de usuario, tu puedes remover el modulo QtGui::
 
     // myproject.pro
 
@@ -225,7 +225,7 @@ Now the build file knows to link against the QtQml and QtQuick Qt modules. QMake
 
     SOURCES += main.cpp
 
-When you want to build a library instead of an application, you need to change the build template::
+Cuando quieras construir una librería en vez de una aplicación, debes de cambiar la plantilla de construcción::
 
     // myproject.pro
     TEMPLATE = lib
@@ -235,10 +235,9 @@ When you want to build a library instead of an application, you need to change t
     HEADERS += utils.h
     SOURCES += utils.cpp
 
+Ahora, el proyecto va a construirse como librería sin dependencias de interfaz de usuario y usa el encabezado ``utils.h`` y el código fuente ``utils.cpp``. El formato de la librería va a depender del sistema operativo que estas construyendo en el proyecto.
 
-Now the project will build as a library without UI dependencies and used the ``utils.h`` header and the ``utils.cpp`` source file. The format of the library will depend on the OS you are building the project.
-
-Often you wil have more complicated setups and need to build a set of projects. For this, qmake offers the ``subdirs`` template. Assume we would have a mylib and a myapp project. Then our setup could be like this::
+Normalmente tu vas a tener unas configuraciones mas complicadas y vas a necesitar construir conjuntos de proyectos. Para esto, qmake ofrece la plantilla ``subdirs``. Asume que queremos hacer un proyecto librería (mylib) y un proyecto aplicación (myapp). Entonces nuestra configuración puede ser como esto::
 
     my.pro
     mylib/mylib.pro
@@ -247,7 +246,7 @@ Often you wil have more complicated setups and need to build a set of projects. 
     myapp/myapp.pro
     myapp/main.cpp
 
-We know already how the mylib.pro and myapp.pro would look like. The my.pro as the overarching project file would look like this::
+Nosotros ya sabemos como mylib.pro y myapp.pro son. El my.pro como un archivo de proyecto enlazador puede parecer como esto::
 
     // my.pro
     TEMPLATE = subdirs
@@ -257,11 +256,11 @@ We know already how the mylib.pro and myapp.pro would look like. The my.pro as t
 
     myapp.depends = mylib
 
-This declares a project with two subprojects: ``mylib`` and ``myapp``, where ``myapp`` depends on ``mylib``. When you run qmake on this project file it will generate file a build file for each project in a corresponding folder. When you run the make file for ``my.pro``, all subprojects are also built.
+Esto declara un proyecto con 2 sub-proyectos: ``mylib`` y ``myapp``, donde ``myapp`` depende de ``mylib``. Cuando qmake se ejecuta en este archivo de proyecto, va a generar un archivo de construcción para cada proyecto en la carpeta correspondiente. Cuando ejecutas el archivo make para ``my.pro``, todos los sub-proyectos serán construidos.
 
-Sometimes you need to do one thing on one platform and another thing on other platforms based on your configuration. For this qmake introduces the concept of scopes. A scope is applied when a configuration option is set to true.
+Aveces, necesitaras hacer una cosa en una plataforma, y esta otra cosa en otra plataforma basada en tu configuración. Para esto qmake introduce el concepto de alcances. Un alcance es aplicado cuando una opción de configuración es establecida como verdadera.
 
-For example to use a unix specific utils implementation you could use::
+Por ejemplo, para usar una implementación de utilidades especifica para Unix, puedes usar::
 
     unix {
         SOURCES += utils_unix.cpp
@@ -269,73 +268,72 @@ For example to use a unix specific utils implementation you could use::
         SOURCES += utils.cpp
     }
 
-What it says is if the CONFIG variable contains a unix option then apply this scope otherwise use the else path. A typical one is to remove the application bundling under mac::
+Lo que dice es que si la variable CONFIG contiene una opción de unix, entonces aplica el alcance; de otra forma usa el camino “entonces”. Algo típico es el de remover  un empaquetamiento de aplicación dentro de mac::
 
     macx {
         CONFIG -= app_bundle
     }
 
-This will create your application as a plain executable under mac and not as a ``.app`` folder which is used for application installation.
+Esto creara una aplicación en un ejecutable plano dentro de mac y no como una carpeta ``.app`` que es usada en la instalación de la aplicación.
 
-QMake based projects are normally the number one choice when you start programming Qt applications. There are also other options out there. All have their benefits and drawbacks. We will shortly discuss these other options next.
+Proyectos basados en Qmake son normalmente el numero uno en ser escogidos cuando empiezas programando aplicaciones de Qt. También hay otras opciones en la industria. Todos tienen sus beneficios y desventajas. Vamos a discutir estas opciones rápidamente.
 
 .. rubric:: References
 
-* :qt5:`QMake Manual <qmake-manual>` - Table of contents of the qmake manual
+* :qt5:`QMake Manual <qmake-manual>` - Tabla de contenido de qmake.
 
-* :qt5:`QMake Language <qmake-language>` - Value assignment, scopes and so like
+* :qt5:`QMake Language <qmake-language>` - Asignacion de valores, alcances y asi.
 
-* :qt5:`QMake Variables <qmake-variable-reference>` - Variables like TEMPLATE, CONFIG, QT are explained here
-
-
+* :qt5:`QMake Variables <qmake-variable-reference>` - Variables como TEMPLATE, CONFIG y QT son explicados aqui.
 
 CMake
 -----
 
 .. issues:: ch15
 
-CMake is a tool create by Kitware. Kitware is very well known for their 3D visualitation software VTK and also CMake, the cross platform makefile generator. It uses a series of ``CMakeLists.txt`` files to generate platform specific make files. CMake is used by the KDE project and as such has a special relationship with the Qt community.
+CMake es una herramienta creada por Kitware. Kitware es bastante famoso por su software de visualización 3D VTK , y también CMake, el generador de archivos make multi-plataforma. Usa una seria de archivos ``CmakeLists.txt`` para generar archivos make de una plataforma especifica. CMake es usado en el proyecto KDE y debido a esto, tiene una relacion especial con la comunidad Qt.
 
-The ``CMakeLists.txt`` is the file used to store the project configuration. For a simple hello world using QtCore the project file would look like this::
+El ``CmakeLists.txt`` es el archivo usado para guardar las configuraciones de proyecto. Es un simple hello world usando QtCore, el archivo de proyecto puede parecerse a esto:
 
-    // ensure cmake version is at least 3.0
+    // Asegura la version de cmake es al menos 3.0
     cmake_minimum_required(VERSION 3.0)
-    // adds the source and build location to the include path
+    // Agrega la localizacion de la fuente y construccion en la direccion incluida.
     set(CMAKE_INCLUDE_CURRENT_DIR ON)
-    // Qt's MOC tool shall be automatically invoked
+    // Herramienta de MOC en Qt debera ser automaticamente invocado.
     set(CMAKE_AUTOMOC ON)
-    // using the Qt5Core module
+    // Usando el modulo QtCore5
     find_package(Qt5Core)
-    // create excutable helloworld using main.cpp
+    // Crear un helloworld ejecutable usando main.cpp
     add_executable(helloworld main.cpp)
-    // helloworld links against Qt5Core
+    // helloworld enlaza con Qt5Core
     target_link_libraries(helloworld Qt5::Core)
 
-This will build a helloworld executable using main.cpp and linked agains the external Qt5Core library. The build file can be modified to be more generic::
 
-    // sets the PROJECT_NAME variable
+Esto va a construir un ejecutable helloworld usando main.cpp y enlazarlo contra la librería externa Qt5Core. El archivo de construcción puede ser modificado para ser mas genérico::
+
+    // Establece la variable PROJECT_NAME
     project(helloworld)
     cmake_minimum_required(VERSION 3.0)
     set(CMAKE_INCLUDE_CURRENT_DIR ON)
     set(CMAKE_AUTOMOC ON)
     find_package(Qt5Core)
 
-    // creates a SRC_LIST variable with main.cpp as single entry
+    // Crea la variable SRC_LIST con main.cpp en una sola entrada.
     set(SRC_LIST main.cpp)
-    // add an executable based on the project name and source list
+    // Agregar un ejecutable basado en el nombre del proyecto y la lista de codigo fuente.
     add_executable(${PROJECT_NAME} ${SRC_LIST})
-    // links Qt5Core to the project executable
+    // Conecta Qt5Core con el ejecutable del proyecto.
     target_link_libraries(${PROJECT_NAME} Qt5::Core)
 
-You can see that CMake is quite powerful. It takes some time to get used to the syntax. In general, it is said that CMake is better suited for large and complex projects.
+Tu puedes ver que CMake es bastante poderoso. Toma algo de tiempo para acostumbrarse a la sintaxis. En general, es dicho que CMake es mejor para proyectos complejos y largos.
 
 .. rubric:: References
 
-* `CMake Help <http://www.cmake.org/documentation/>`_ - available online but also as QtHelp format
-* `Running CMake <http://www.cmake.org/runningcmake/>`_
-* `KDE CMake Tutorial <https://techbase.kde.org/Development/Tutorials/CMake>`_
-* `CMake Book <http://www.kitware.com/products/books/CMakeBook.html>`_
-* `CMake and Qt <http://www.cmake.org/cmake/help/v3.0/manual/cmake-qt.7.html>`_
+* `Ayuda CMake <http://www.cmake.org/documentation/>`_ -disponbile en linea pero tambien en formato QtHelp.
+* `Ejecutando CMake <http://www.cmake.org/runningcmake/>`_
+* `Tutorial de KDE CMake  <https://techbase.kde.org/Development/Tutorials/CMake>`_
+* `Libro de CMake <http://www.kitware.com/products/books/CMakeBook.html>`_
+* `CMake y Qt <http://www.cmake.org/cmake/help/v3.0/manual/cmake-qt.7.html>`_
 
 Common Qt Classes
 =================
