@@ -335,21 +335,21 @@ Tu puedes ver que CMake es bastante poderoso. Toma algo de tiempo para acostumbr
 * `Libro de CMake <http://www.kitware.com/products/books/CMakeBook.html>`_
 * `CMake y Qt <http://www.cmake.org/cmake/help/v3.0/manual/cmake-qt.7.html>`_
 
-Common Qt Classes
+Clases comunes de Qt
 =================
 
 .. issues:: ch15
 
-The ``QObject`` class forms the foundations of Qt, but there are many more classes in the framework. Before we continue looking at QML and how to extend it, we will look at some basic Qt classes that are useful to know about.
+La clase ``QObject`` forma los fundamentos de Qt, pero también hay mas clases en el framework. Antes de continuar viendo en QML y ver como extenderlo, vamos a ver algunas cosas básicas de las clases de Qt que son útiles para saber.
 
-The code examples shown in this section are written using the Qt Test library. It offers a great way to explore the Qt API and store it for later reference. ``QVERIFY``, ``QCOMPARE`` are functions provided by the test library to assert a certain condition. We will use ``{}`` scopes to avoid name collisions. So do not get confused.
+Los ejemplos de código mostrados en esta sección están escritos usando la librería Qt Test. Esta librería ofrece una buena manera de explorar la API de Qt y guardarlo para una referencia posterior. ``QVERIFY``, ``QCOMPARE`` son funciones proveídas por la librería de prueba para asegurar una condición especifica. Usamos el alcance ``{}`` para evitar colisiones de nombre. Entonces no te confundas.
 
 QString
 -------
 
-In general, text handling in Qt is unicode based. For this you use the ``QString`` class. It comes with a variety of great functions which you would expect from a modern framework. For 8-bit data you would use normally the ``QByteArray`` class and for ASCII identifiers the ``QLatin1String`` to preserve memory. For a list of strings you can use a ``QList<QString>`` or simply the ``QStringList`` class (which is derived from ``QList<QString>``).
+En general, el manejar de texto en Qt esta basado en Unicode. Para esto, tu puedes usar la clase ``QString``. Esta clase viene con una variedad de funciones buenas que puedes esperar de frameworks modernos. Para datos de 8-bits, tu puedes usar normalmente la clase ``QByteArray`` y para identificadores de ASCII, usa ``QLatin1String`` para preservar memoria. Para una lista de cadenas, puedes usar ``QList<QString>`` o simplemente la clase ``QstringList`` ( que esta derivando de  ``QList<QString>``).
 
-Here are some examples of how to use the ``QString`` class. QString can be created on the stack but it stores its data on the heap. Also when assigning one string to another, the data will not be copied - only a reference to the data. So this is really cheap and lets the developer concentrate on the code and not on the memory handling. ``QString`` uses reference counters to know when the data can be safely deleted. This feature is called :qt5:`Implicit Sharing <implicit-sharing>` and it is used in many Qt classes.
+Aquí hay algunos ejemplos de como usar la clase ``QString``. QString puede ser creado en la pila pero guarda sus datos en el “heap”.  También cuando asignamos una cadena con otra, los datos no van a ser copiados- solo hacer referencia a sus datos. Esto es realmente barato y permite al desarrollador concentrarse en el código y no en el manejo de memoria. ``QString`` usa contadores de referencia para conocer cuando los datos pueden ser eliminados con seguridad. Este rasgo es llamado :qt5:` Compartir Implícito <implicit-sharing>` y es usado en muchas clases de Qt.
 
 
 .. literalinclude:: src/qtfoundation/tst_foundation.cpp
@@ -357,57 +357,57 @@ Here are some examples of how to use the ``QString`` class. QString can be creat
     :start-after: M1>>
     :end-before:  M1<<
 
-Here we will show how to convert a number to a string and back. There are also conversion functions for float or double and other types. Just look for the function in the Qt documentation used here and you will find the others.
+Aquí vamos a mostrar como convertir un numero a cadena y viceversa. Aquí también hay funciones de conversión para números flotantes y otros tipos. Solo busca la función que usamos aquí en la documentación de Qt y encontraras otras funciones.
 
 .. literalinclude:: src/qtfoundation/tst_foundation.cpp
     :language: cpp
     :start-after: M2>>
     :end-before:  M2<<
 
-Often in text you need to have parameterized text. One option could be to use ``QString("Hello" + name)`` but a more flexible method is the ``arg`` marker approach.  It preserves the order also during translation when the order might change.
+Normalmente en texto, tu necesitas texto parametrizado. Una opción puede ser el uso de ``QString(“Hello” + name)`` pero una manera mas flexible es usando el marcador ``arg``. Esto también preserva el orden durante traducción cuando el orden puede ser cambiado.
 
 .. literalinclude:: src/qtfoundation/tst_foundation.cpp
     :language: cpp
     :start-after: M3>>
     :end-before:  M3<<
 
-Sometimes you want to use unicode characters directly in you code. For this you need to remember how to mark them for the ``QChar`` and ``QString`` classes.
+Aveces tu querrás usar caracteres unicode directamente en tu código. Para hacer esto tu necesitas recordar como marcarlos para las clases ``QChar`` y ``QString`` 
 
 .. literalinclude:: src/qtfoundation/tst_foundation.cpp
     :language: cpp
     :start-after: M4>>
     :end-before:  M4<<
 
-This gives you some examples of how to easily treat unicode aware text in Qt. For non-unicode the ``QByteArray`` class also has many helper functions for conversion. Please read the Qt documentation for ``QString`` as it contains tons of good examples.
+Esto te da algunos ejemplos de como fácilmente tu puedes tratar texto Unicode en Qt. Para texto no-Unicode, la clase ``QByteArray`` también tiene bastantes funciones ayudantes para conversiones. Por favor, lee la documentación de Qt para ``QString``, ya que contiene toneladas de buenos ejemplos.
 
-Sequential Containers
+Contenedores secuenciales
 ---------------------
 
-A list, queue, vector or linked-list is a sequential container. The mostly used sequential container is the ``QList`` class. It is a template based class and needs to be initialized with a type. It is also implicit shared and stores the data internally on the heap. All container classes should be created on the stack. Normally you never want to use ``new QList<T>()``, which means never use ``new`` with a container.
+Una lista, cola, vector o lista enlazada es un contenedor secuencial. El contenedor secuencial mas usado es la clase ``QList``. Es una clase genérica y necesita ser inicializada con un tipo. Es también compartido implícitamente y guarda los datos internamente en el “heap”.  Toda clase contenedor deberá ser creado en la pila. Normalmente tu nunca quieres usar ``new QList<T>()``, que significa que nunca deberás usar ``new`` con un contenedor.
 
-The ``QList`` is as versatile as the ``QString`` class and offers a great API to explore your data. Below is a small example how to use and iterate over a list using some new C++ 11 features.
+``QList`` es tan versátil como la clase ``QString``  y ofrece una gra API para explorar tus datos. Abajo hay un pequeño ejemplo de como usar e iterar a través de una lista usando algunos rasgos nuevos de C++ 11. 
 
 .. literalinclude:: src/qtfoundation/tst_foundation.cpp
     :language: cpp
     :start-after: M5>>
     :end-before:  M5<<
 
-Associative Containers
+Contenedores Asociativos
 ----------------------
 
-A map, a dictionary, or a set are examples of associative containers. They store a value using a key. They are known for their fast lookup. We demonstrate the use of the most used associative container the ``QHash`` also demonstrating some new C++ 11 features.
+Un mapa, un diccionario, o un conjunto son ejemplos de contenedores asociativos. Ellos guardan un valor usando una llave. Estos contenedores son famosos por sus búsquedas rápidas. Aquí demostramos el uso de el contenedor asociativo mas usado, el ``Qhash``; también demostrando algunos rasgos nuevos de C++11.
 
 .. literalinclude:: src/qtfoundation/tst_foundation.cpp
     :language: cpp
     :start-after: M6>>
     :end-before:  M6<<
 
-File IO
+Archivo I/O
 -------
 
-It is often required to read and write from files. ``QFile`` is actually a ``QObject`` but in most cases it is created on the stack. ``QFile`` contains signals to inform the user when data can be read. This allows reading chunks of data asynchronously until the whole file is read. For convenience it also allows reading data in blocking mode. This should only be used for smaller amounts of data and not large files. Luckily we only use small amounts of data in these examples.
+Es bastante requerido el leer y escribir en archivos. ``QFile`` es un ``QObject`` pero es la mayoría de los casos es creado en la pila. ``QFile`` contiene señales para informar el usuario cuando los datos pueden ser leídos. Esto permite leer pedazos de datos de modo asíncrono hasta que el archivo completo sea leído. Por conveniencia, también permite leer datos en modo bloqueado. Esto deberá ser usado unicamente para pequeñas cantidades de datos y no para archivos largos. Afortunadamente, solo leemos pequeños pedazos de datos en estos ejemplos.
 
-Besides reading raw data from a file into a ``QByteArray`` you can also read data types using the ``QDataStream`` and unicode string using the ``QTextStream``. We will show you how.
+Aparte de leer datos crudos desde un archivo usando un ``QByteArray``, tu también puedes leer datos de otros tipos usando ``QDataStream`` y cadenas Unicode usando ``QTextStream``. Te mostraremos como hacerlo.
 
 .. literalinclude:: src/qtfoundation/tst_foundation.cpp
     :language: cpp
@@ -415,24 +415,22 @@ Besides reading raw data from a file into a ``QByteArray`` you can also read dat
     :end-before:  M7<<
 
 
-More Classes
+Mas Clases
 ------------
 
 .. issues:: ch15
+Qt es un framework de aplicaciones rico. Ya que tiene miles de clases. Toma algo de tiempo acostumbrarse a todas estas clases y como usarlos. Afortunadamente, Qt tiene una buena documentación  con muchos ejemplos incluidos. Mucho de tu tiempo, estas buscando por una clase de acuerdo con tu interés, y los casos de uso mas comunes están ofrecidos como muestras de código. Lo cual significa que solo copias y adaptas estas muestras de código. También ejemplos de Qt en el código fuente de Qt es de gran ayuda. Ten por seguro que estos sean disponibles para hacer tu vida mas productiva. No pierdas tiempo. La comunidad de Qt también es muy útil, cuando preguntes es muy útil preguntar preguntas exactas y proveer un ejemplo simple que despliegue tus necesidades. Esto drásticamente mejorara el tiempo de respuesta de otros. Entonces invierte un poco de tiempo para hacer la vida de los otros que quieren ayudarte, mas fácil.
 
-Qt is a rich application framework. As such it has thousands of classes. It takes some time to get used to all of these classes and how to use them. Luckily Qt has a very good documentation with many useful examples includes. Most of the time you search for a class and the most common use cases are already provided as snippets. Which means you just copy and adapt these snippets. Also Qt's examples in the Qt source code are a great help. Make sure you have them available and searchable to make your life more productive. Do not waste time. The Qt community is always helpful. When you ask, it is very helpful to ask exact questions and provide a simple example which displays your needs. This will drastically improve the response time of others. So invest a litte bit of time to make the life of others who want to help you easier :-).
+Aquí hay algunas clases que su documentación, el autor piensa que tienes que leerlo: :qt5:`QObject <qobject>`, :qt5:`QString <qstring>`, :qt5:`QByteArray <qbytearray>`, :qt5:`QFile <qfile>`, :qt5:`QDir <qdir>`, :qt5:`QFileInfo <qfileinfo>`, :qt5:`QIODevice <qiodevice>`, :qt5:`QTextStream <qtextstream>`, :qt5:`QDataStream <qdatastream>`, :qt5:`QDebug <qdebug>`, :qt5:`QLoggingCategory <qloggingcategory>`, :qt5:`QTcpServer <qtcpserver>`, :qt5:`QTcpSocket <qtcpsocket>`, :qt5:`QNetworkRequest <qnetworkrequest>`, :qt5:`QNetworkReply <qnetworkreply>`, :qt5:`QAbstractItemModel <qabstractitemmodel>`, :qt5:`QRegExp <qregexp>`, :qt5:`QList <qlist>`, :qt5:`QHash <qhash>`, :qt5:`QThread <qthread>`, :qt5:`QProcess <qprocess>`, :qt5:`QJsonDocument <qjsondocument>`, :qt5:`QJSValue <qjsvalue>`.
 
-Here some classes whose documentation the author thinks are a must read: :qt5:`QObject <qobject>`, :qt5:`QString <qstring>`, :qt5:`QByteArray <qbytearray>`, :qt5:`QFile <qfile>`, :qt5:`QDir <qdir>`, :qt5:`QFileInfo <qfileinfo>`, :qt5:`QIODevice <qiodevice>`, :qt5:`QTextStream <qtextstream>`, :qt5:`QDataStream <qdatastream>`, :qt5:`QDebug <qdebug>`, :qt5:`QLoggingCategory <qloggingcategory>`, :qt5:`QTcpServer <qtcpserver>`, :qt5:`QTcpSocket <qtcpsocket>`, :qt5:`QNetworkRequest <qnetworkrequest>`, :qt5:`QNetworkReply <qnetworkreply>`, :qt5:`QAbstractItemModel <qabstractitemmodel>`, :qt5:`QRegExp <qregexp>`, :qt5:`QList <qlist>`, :qt5:`QHash <qhash>`, :qt5:`QThread <qthread>`, :qt5:`QProcess <qprocess>`, :qt5:`QJsonDocument <qjsondocument>`, :qt5:`QJSValue <qjsvalue>`.
+Esto debería ser suficiente por ahora.
 
-That should be enough for the beginning.
-
-
-Models in C++
+Modelos en C++
 =============
 
-Models in QML serve the purpose of providing data to ``ListViews``, ``PathViews`` and other views which take a model and create an instance of a delegate for each entry in the model. The view is smart enough to only create these instances which are visible or in the cache range. This makes it possible to have large models with tens of throusands of entries but still have a very slick user interface. The delegate acts like a template to be rendered with the model entries data. So in summary: a view renders entries from the model using a delegate as a template. The model is a data provider to views.
+Modelos en QML sirven con el propósito de proveer datos de ``ListViews``, ``PathViews`` y otras vistas que toman un modelo y crear una instancia de cada delegado para cada entrada en el modelo. La vista es lo suficientemente inteligente para crear estas instancias, que son visible so que están en el rango del cache. Esto hace posible tener modelos grandes con cientos de miles de entradas pero aun así tiene un interfaz. El delegado actuá como una plantilla para ser renderizado con datos de entrada de modelo. En resumen: una vista despliega las entradas de un modelo usando un delegado como una plantilla. El modelo es el proveedor de datos para las vistas.
 
-When you do not want to use C++ you can also define models in pure QML. You have several ways to provide a model to the view. For handling of data coming from C++ or large amount of data  the C++ model is more suitable than these pure QML approaches. But often you only need a few entries then these QML models are well suited.
+Cuando no quieras usar C++, puedes definir modelos puros en QML. Tu tienes bastantes maneras de proveer un modelo para una vista. Para manipulación de datos viniendo  de datos desde C++ o grandes cantidades de datos, el modelo de C++ es mas adecuado que las maneras de QML. Pero normalmente solo ocupas algunas entradas, entonces estos modelos QML serán muy útiles.
 
 .. code-block:: qml
 
@@ -460,24 +458,24 @@ When you do not want to use C++ you can also define models in pure QML. You have
         delegate: Text { 'Char['+ index +']: ' + model.char }
     }
 
-The QML views knows how to handle these different models. For models coming from the C++ world the view expects a specific protocol to be followed. This protocol is defined in an API (``QAbstractItemModel``) together with documentation for the dynamic behavior. The API was developed for the desktop widget world and is flexible enough to act as a base for trees, or multi column tables as well as lists. In QML, we almost only use the list version of the API (``QAbstractListModel``). The API contains some mandatory functions to be implemented and some are optional. The optional parts mostly handle the dynamic use case of adding or removing of data.
+La vista de QML sabe como usar  estos diferentes modelos. Para modelos viniendo del mundo de C++, la vista espera un protocolo especifico a seguir. Este protocolo esta definido en la API (``QAbstractItemModel``)  junto con la documentación para un comportamiento dinámico. La API fue desarrollado para el mundo de widgets de escritorio y puede ser usada unicamente con versiones de lista de la API (``QAbstractListModel``). La API contiene algunas funciones obligatorias para ser implementados y algunas son opcionales. Las partes opcionales, la mayoría de las veces manipulan el caso de uso dinámico de agregar o remover datos.
 
-A simple model
+Un modelo simple
 --------------
 
-A typical QML C++ model derives from ``QAbstractListModel`` and implements at least the ``data`` and ``rowCount`` function. In this example we will use a series of SVG color names provided by the ``QColor`` class and display them using our model. The data is stored into a ``QList<QString>`` data container.
+Un modelo de QML y C++ deriva de ``QAbstractListModel`` e implementa al menos las funciones de ``data`` y ``rowCount``. En este ejemplo, vamos a usar una serie de nombres de colores de SVG proveídos por la clase ``QColor`` y mostrarlos usando nuestro modelo. Los datos son guardados dentro de un contenedor de datos ``QList<QString>``.
 
-Our ``DataEntryModel`` is derived form ``QAbstractListModel`` and implementats the mandatory functions. We can ignore the parent in ``rowCount`` as this is only used in a tree model. The ``QModelIndex`` class provides the row and column information for the cell, for which the view wants to retrieve data. The view is pulling information from the model on a row/column and role base. The ``QAbstractListModel`` is defined in ``QtCore`` but ``QColor`` in ``QtGui``. That is why we have the additional ``QtGui`` dependency. For QML applications it is okay to depend on ``QtGui`` but it should normally not depend on ``QtWidgets``.
+Nuestro ``DataEntryModel`` deriva de ``QabstractListModel`` e implementa las funciones obligatorias. Nosotros podemos ignorar a los padres en ``rowCount`` ya que esto es usado unicamente para un modelo de arbol. La clase ``QmodelIndex`` provee la información de renglón y columna para la celda, de los cuales la vista quiere recibir datos. La vista esta jalando información para el modelo en un renglón/columna, y en una base de rol. El ``QAbstractListModel`` es definido en ``QtCore`` pero ``QColor` en ``QtGui`. Es por ello que tenemos la dependencia adicional de ``QtGui``. Para aplicaciones QML, esta bien el depender en ``QtGui`` pero normalmente no deberá de depender en ``QtWidget``.
 
 .. literalinclude:: src/modelview/dataentrymodel.h
     :language: cpp
 
-On the implementation side the most complex part is the data function. We first need to make a range check. And then we check for the display role. The ``Qt::DisplayRole`` is the default text role a view will ask for. There is a small set of default roles defined in Qt which can be used, but normally a model will define its own roles for clarity. All calls which do not contain the display role are ignored at the moment and the default value ``QVariant()`` is returned.
+En el lado de la implementación, la parte mas compleja es la función de datos. Primero debemos de marcar un chequeo de rango. Y luego checamos el rol de muestra. El ``Qt::DisplayRole`` es el rol de texto por defecto que una vista va a preguntar por el. Hay un pequeño conjunto de roles por defecto definidos en Qt cuales pueden ser usados, pero normalmente un modelo puede definir sus propios roles para claridad. Toda llamada que no contenga el rol de muestra, son ignorados por el momento , y el valor por defecto ``QVariant()`` es retornado.
 
 .. literalinclude:: src/modelview/dataentrymodel.cpp
     :language: cpp
 
-The next step would be to register the model with QML using the ``qmlRegisterType`` call. This is done inside the ``main.cpp`` before the QML file was loaded.
+El siguiente paso puede ser registrar el modelo con QML usando la llamada ``qmlRegisterType``. Esto esta hecho adentro del ``main.cpp`` antes que el archivo QML es agregado.
 
 .. code-block:: cpp
 
@@ -502,9 +500,9 @@ The next step would be to register the model with QML using the ``qmlRegisterTyp
     }
 
 
-Now you can access the ``DataEntryModel`` using the QML import statement ``import org.example 1.0`` and use it just like other QML item ``DataEntryModel {}``.
+Ahora puedes accesar el ``DataEntryModel`` usando la oración importada de QML ``import org.example 1.0`` y usarlo como otro articulo de QML ``DataEntryModel {}``.
 
-We use this in this example to display a simple list of color entries.
+Usamos esto en este ejemplo para mostrar una lista simple de entradas de color.
 
 .. code-block:: qml
 
@@ -521,28 +519,26 @@ We use this in this example to display a simple list of color entries.
         highlight: ListHighlight { }
     }
 
-The ``ListDelegate`` is a custom type to display some text. The ``ListHighlight`` is just a rectangle. The code was extracted to keep the example compact.
+El ``ListDelegate`` es un tipo personalizado que despliega algo de texto. El ``ListHighlight`` es solo un rectángulo. El código es extraído para mantener el ejemplo compacto.
+La vista puede ahora mostrar la lista de cadenas usando el modelo de C++ y la propiedad de vista del modelo. Y sigue siendo bastante simple, pero ahora realmente usado en QML. Normalmente los datos son puestos desde afuera del modelo y el modelo puede actuar como una interfaz para la vista.
 
-The view can now display a list of strings using the C++ model and the display property of the model. It is still very simple, but already usable in QML. Normally the data is provided from outside the model and the model would act as an interface to the view.
-
-More Complex Data
+Datos Mas Complejos
 -----------------
 
-In reality the model data is often much more complex. So there is a need to define custom roles so that the view can query other data via properties. For example the model could provide not only the color as hex string, but maybe also the hue, saturation and brightness from the HSV color model as "model.hue", "model.saturation" and "model.brightness" in QML.
+En realidad los datos del modelo son mucho mas complejos. Entonces es una necesidad el definir roles personalizados para que la vista pueda encolar otros datos mediante propiedades. Por ejemplo, el modelo puede proveer no solo un color como una cadena hexadecimal, pero también puede un hue, saturación y intensidad desde un modelo de color HSV como “model.hue”, “model.saturation” y “model.brightness” en QML.
 
 .. literalinclude:: src/modelview/roleentrymodel.h
     :language: cpp
 
-In the header we added the role mapping to be used for QML. When QML tries now to access a property from the model (e.g. "model.name") the listview will lookup the mapping for "name" and ask the model for data using the ``NameRole``. User defined roles should start with ``Qt::UserRole`` and need to be unique for each model.
+En el encabezado agregamos el mapeo de roles para ser usados en QML. Cuando QML trata de acceder una propiedad desde el modelo (ejemplo, “model.name”) la listview va a buscar el mapeo para “name” y va a preguntar el modelo por los datos usando el ``NameRole``. Roles definidos por el usuario deberán de empezar con ``Qt::UserRole`` y necesitan ser únicos para cada modelo.
 
 .. literalinclude:: src/modelview/roleentrymodel.cpp
     :language: cpp
 
 The implementation now has changed only in two places. First in the initialization. We now initialize the data list with QColor data types. Additionally we define our role name map to be accessible for QML. This map is returned later in the ``::roleNames`` function.
 
-The second change is in the ``::data`` function. We extend the switch to cover the other roles (e.g hue, saturation, brightness). There is no way to return a SVG name from a color, as a color can take any color and SVG names are limited. So we skip this. Storing the names would require to create a structure ``struct { QColor, QString }`` to be able to identify the named color.
-
-After registering the type we can use the model and its entries in our user interface.
+El segundo cambio es el de la función ``::data``. Nosotros extendemos el switch para cubrir los otros roles (ejemplo, hue,saturación, intensidad). Aquí no hay manera de retornar un nombre SVG desde color, ya que el color solo puede ser tomado desde cualquier otro color y los nombres de SVG son limitados. Entonces ignoramos esto. Guardando los nombres puede requerir el crear una estructura ``struct { QColor, QString}`` para ser capaz de identificar el color nombrado.
+Después de registrar el tipo, podemos usar el modelo y sus entradas en nuestra interfaz de usuario.
 
 .. code-block:: qml
 
@@ -561,9 +557,9 @@ After registering the type we can use the model and its entries in our user inte
         highlight: ListHighlight { }
     }
 
-We convert the returned type to a JS number type to be able to format the number using fixed-point notation. The code would also work without the Number call (e.g. plain ``model.saturation.toFixed(2)``). Which format to choose, depends how much you trust the incoming data.
+Hemos convertido los tipos de retorno para los tipos de numero de JS para ser capaz de formatear el numero usando notación de punto fijo. El código puede también trabajar sin la llamada de Number (ejemplo, crudo ``model.saturation.toFixed(2)``). Cual formato es escogido, depende de que tanto confiás en los datos entrantes.
 
-Dynamic Data
+Datos Dinamicos
 ------------
 
 Dynamic data covers the aspects of inserting, removing and clearing the data from the model. The ``QAbstractListModel`` expect a certain behavior when entries are removed or inserted. The behavior is expressed in signals which needs to be called before and after the manipulation. For example to insert a row into a model you need first to emit the signal ``beginInsertRows``, then manipulate the data and then finally emit ``endInsertRows``.
