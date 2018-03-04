@@ -559,34 +559,34 @@ Después de registrar el tipo, podemos usar el modelo y sus entradas en nuestra 
 
 Hemos convertido los tipos de retorno para los tipos de numero de JS para ser capaz de formatear el numero usando notación de punto fijo. El código puede también trabajar sin la llamada de Number (ejemplo, crudo ``model.saturation.toFixed(2)``). Cual formato es escogido, depende de que tanto confiás en los datos entrantes.
 
-Datos Dinamicos
+Datos Dinámicos
 ------------
 
-Dynamic data covers the aspects of inserting, removing and clearing the data from the model. The ``QAbstractListModel`` expect a certain behavior when entries are removed or inserted. The behavior is expressed in signals which needs to be called before and after the manipulation. For example to insert a row into a model you need first to emit the signal ``beginInsertRows``, then manipulate the data and then finally emit ``endInsertRows``.
+Datos dinámicos cubren los aspectos de inserción, eliminación y limpieza de datos desde el modelo. El ``QAbstractListModel`` espera un cierto comportamiento cuando las entradas son removidas o insertadas. El comportamiento es expresado en señales, cuales necesitan ser llamados antes y después de la manipulación. Por ejemplo, para insertar un renglón dentro de un modelo, primero necesitas emitir una señal ``beginInsertRows``, entonces manipular los datos y finalmente emitir ``endInsertRows``.
 
-We will add the following functions to our headers. These functions are declared using ``Q_INVOKABLE`` to be able to call them from QML. Another way would be to declare them a public slots.
+Cuando agreguemos las siguientes funciones a nuestros encabezados. Estas funciones son declarados usando ``Q_INVOKABLE`` para ser capaz de llamarlos desde QML. Otra manera podría ser declararles un hueco publico.
 
 .. code-block:: cpp
 
-    // inserts a color at the index (0 at begining, count-1 at end)
+    // Insertar un color ene el indice (0 en el inicio, count-1 al final)
     Q_INVOKABLE void insert(int index, const QString& colorValue);
-    // uses insert to insert a color at the end
+    // Usado para insertar un color al final
     Q_INVOKABLE void append(const QString& colorValue);
-    // removes a color from the index
+    // Remueve un color desde el indice
     Q_INVOKABLE void remove(int index);
-    // clear the whole model (e.g. reset)
+    //crea un modelo comple (ejemplo, reset)
     Q_INVOKABLE void clear();
 
-Additionally we define a ``count`` property to get the size of the model and a ``get`` method to get a color at the given index. This is useful when you would like to iterate over the model content from QML.
+Adicionalmente, hemos definido una propiedad ``count`` para tomar el tamaño  del modelo y un método ``get`` para tener el color de un indice dado. Esto es muy útil cuando tu quieres iterar sobre el contenido de un modelo en QML.
 
 .. code-block:: cpp
 
-    // gives the size of the model
+    // Da el tamaño del modelo
     Q_PROPERTY(int count READ count NOTIFY countChanged)
-    // gets a color at the index
+    // Toma el color en el indice
     Q_INVOKABLE QColor get(int index);
 
-The implementation for insert checks first the boundaries and if the given value is valid. Only then do we begin inserting the data.
+La implementación para insertar primero checa los limites y si el valor dado es valido. Solo así, empezamos insertando datos.
 
 .. code-block:: cpp
 
@@ -599,15 +599,15 @@ The implementation for insert checks first the boundaries and if the given value
         if(!color.isValid()) {
             return;
         }
-        // view protocol (begin => manipulate => end]
+        // Protocolo de vista (inicio => manipular => final]
         emit beginInsertRows(QModelIndex(), index, index);
         m_data.insert(index, color);
         emit endInsertRows();
-        // update our count property
+        // Restablecer nuestra propiedad count
         emit countChanged(m_data.count());
     }
 
-Append is very simple. We reuse the insert function with the size of the model.
+Adjuntar es muy simple. Nosotros usamos la función de insertar con el tamaño del modelo.
 
 .. code-block:: cpp
 
@@ -616,7 +616,7 @@ Append is very simple. We reuse the insert function with the size of the model.
         insert(count(), colorValue);
     }
 
-Remove is similar to insert but it calls according to the remove operation protocol.
+Remover es similar a insertar pero sus llamadas están basadas en el protocolo de operación de remoción.
 
 .. code-block:: cpp
 
@@ -628,11 +628,11 @@ Remove is similar to insert but it calls according to the remove operation proto
         emit beginRemoveRows(QModelIndex(), index, index);
         m_data.removeAt(index);
         emit endRemoveRows();
-        // do not forget to update our count property
+        // No olvides actualizar nuestra propiedad Count
         emit countChanged(m_data.count());
     }
 
-The helper function ``count`` is trivial. It just returns the data count. The ``get`` function is also quite simple.
+La función de ayuda ``count`` es trivial. Solo retorna los datos de count. La función ``get`` es también algo simple.
 
 .. code-block:: cpp
 
@@ -644,25 +644,21 @@ The helper function ``count`` is trivial. It just returns the data count. The ``
         return m_data.at(index);
     }
 
-You need to be carefull that you only return a value which QML understands. If it is not one of the basic QML types or types kown to QML you need to register the type first with ``qmlRegisterType`` or ``qmlRegisterUncreatableType``. You use ``qmlRegisterUncreatableType`` if the user shall not be able to instantiate its own object in QML.
+Necesitas ser cuidadoso que solo retornes un valor que QML entienda. Si no es uno de los tipos básicos de QML o tipos que QML conoce, necesitas registrar el tipo primero con ``qmlRegisterType`` o ``qmlRegisterUncreatableType``. Tu usas ``qmlRegisterUncreatableType`` si el usuario no deberá ser hábil de instanciar sus propios objetos en QML.
 
-Now you can use the model in QML and insert, append, remove entries from the model. Here is a small example which allows the user to enter a color name or color hex value and the color is then appended onto the model and shown in the list view. The red circle on the delegate allows the user to remove this entry from the model. After the entry is remove the list view is notified by the model and updates its content.
+Ahora, tu puedes usar el modelo de QML e insertar, agregar, y remover entradas desde un modelo. Aquí hay un pequeño ejemplo que te permite introducir el nombre del color o valor de color hexadecimal, y el color es entonces insertado dentro del modelo y  mostrado en la vista. El circulo rojo en el delegado, nos permite remover la entrada desde el modelo. Después de que la entrada es removida, la vista de lista es notificada por el modelo y actualiza su  contenido.
 
 .. figure:: images/modelview.png
     :scale: 50%
 
-|
-
-And here is the QML code. You find the full source code also in the assets for this chapter. The example uses the QtQuick.Controls and QtQuick.Layout module to make the code more compact. These controls module provides a set of desktop related ui elements in QtQuick and the layouts module provides some very useful layout managers.
+Y aquí esta el código de QML. Tu puedes encontrar el código fuente completo en los recursos de este capitulo. El ejemplo usa los módulos QtQuick.Controls y QtQuick.Layout para  hacer el código mas compacto. Estos módulos de control provee un conjunto de escritorios relacionados con los elementos de UI en QtQuick, y los modelos de acomodo proveen unos administradores de acomodo bastante útiles.
 
 
 .. literalinclude:: src/modelview/main.qml
     :language: qml
 
+Programación de modelo y vista es uno de las actividades mas difíciles de Qt. Es uno de las pocas clases donde tienes que implementar un interfaz como  un desarrollador de aplicaciones de escritorio. Otras clases los usas normalmente. El trazo de  modelos siempre debe de empezar en el lado de QML. Debes de imaginarte como tus usuarios deben de usar tu modelo adentro de QML. Para esto, es también una buena idea el crear un prototipo primero usando el  ``ListModel`` para ver como trabaja mejor con QML. Esto también es verdad cuando viene  a definir APIs de QML. Haciendo los datos disponibles desde C++ en QML no solamente es un limite de tecnología, también es un cambio de paradigma de programación desde un estilo de programación imperativo a declarativo. Esto es, para que estés preparado para algunos fracasos y momentos aha! 
 
-Model view programming is one of the hardest tasks in Qt. It is one of the very few classes where you have to implement an interface as a normal application developer. All other classes you just use normally. The sketching of models should always start on the QML side. You should envision how your users would use your model inside QML. For this it is often a good idea to create a prototype first using the ``ListModel`` to see how this best works in QML. This is also true when it comes to defining QML APIs. Making data available from C++ to QML is not only a technology boundary it is also a programming paradigm change from imperative to declarative style programming. So be prepared for some set backs and aha moments:-).
-
-
-Advanced Techniques
+Técnicas Avanzadas
 -------------------
 
